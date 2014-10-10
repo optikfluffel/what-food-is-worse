@@ -5,8 +5,15 @@
 
 ## Setup for development
 
+### Dependencies
+
 _Make sure you have [rvm](https://rvm.io) installed
 (or anything other that can handle `.ruby-version` and `.ruby-gemset`)_
 
-* if you haven't already install bundler using `gem install bundler`
-* run `bundle install`
+* If you haven't already install bundler using `gem install bundler`
+* Run `bundle install`
+
+### Start server
+
+* Just run `rackup`
+* Visit [localhost:9292](http://localhost:9292) in your browser
