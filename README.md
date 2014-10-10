@@ -12,6 +12,7 @@ _Make sure you have [rvm](https://rvm.io) installed
 
 * If you haven't already install bundler using `gem install bundler`
 * Run `bundle install`
+* Make sure you have [mongoDB](http://www.mongodb.org) installed, up and running
 
 ### Start server
 
