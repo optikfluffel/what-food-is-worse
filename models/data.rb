@@ -14,10 +14,10 @@ class Product
   many :nutritions
 
   def random
-    p = Product.first(:rnd.gte => rand())
-    self.random if p == nil
+    product = Product.first(:rnd.gte => rand())
+    self.random if product == nil
 
-    p
+    product
   end
 end
 
