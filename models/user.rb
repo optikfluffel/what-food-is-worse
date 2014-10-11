@@ -30,8 +30,7 @@ class Game
       random_nutrition = first_game.nutritions[rand(first_game.nutritions.length)]
     end while the_game.products[1].nutritions.include?(:name => random_nutrition.name)
 
-		the_game.mystery = random_nutrition.name.sub('davon ', '')
-		the_game.mystery = random_nutrition.name.sub('Energiewert', 'Kilokalorien')
+		the_game.mystery = random_nutrition.name.sub('davon ', '').sub('Energiewert', 'Kilokalorien')
 
 		basic_text = 'Welches der beiden Produkte hat '
 		mehr_oder_weniger = ['mehr ', 'weniger '][rand(2)]
