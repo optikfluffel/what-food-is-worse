@@ -16,7 +16,7 @@ $(document).ready(function () {
       $(this).parents('.navbar-form').hide();
       $('#main-nav .toggle-forms').show();
     });
-  };
+  }
 
   enableFancyLoginAndRegisterNavbarForm('login');
   enableFancyLoginAndRegisterNavbarForm('register');
@@ -30,7 +30,7 @@ $(document).ready(function () {
       var answer = {
         game: gameId,
         guess: id
-      }
+      };
 
       $.post( '/play', answer).done(function(result) {
         alert( "Data Loaded: " + result );
@@ -38,7 +38,7 @@ $(document).ready(function () {
       });
     });
     console.log(id);
-  };
+  }
 
   $('.game-link').each(function() {
     enableEvenFancierGameLinksSoYouCanActuallyPlayNow($(this));
