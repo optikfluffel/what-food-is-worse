@@ -8,6 +8,9 @@ class Product
   key :name, String, :require => true
   key :imgurl, String, :require => true
   key :rnd, Float, :require => true
+
+  timestamps!
+
   many :nutritions
 
   def random

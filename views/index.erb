@@ -1,1 +1,7 @@
-<h1>Index</h1>
+<h1>
+  <% unless username.nil? %>
+    Howdy <%= username %>!
+  <% else %>
+    You're not logged in.
+  <% end %>
+</h1>
