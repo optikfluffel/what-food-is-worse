@@ -33,15 +33,22 @@ class Game
 		the_game.mystery = random_nutrition.name.sub('davon ', '').sub('Energiewert', 'Kilokalorien')
 
 		basic_text = 'Welches der beiden Produkte hat '
-		mehr_oder_weniger = ['mehr ', 'weniger '][rand(2)]
+		the_game.higher = [true, false][rand(2)]
 
-		the_game.question = basic_text + mehr_oder_weniger + the_game.mystery + '?'
+		if the_game.higher
+			higherText = 'mehr '
+		else
+			higherText = 'weniger '
+		end
+
+		the_game.question = basic_text + higherText + the_game.mystery + '?'
 
     the_game
   end
 
 	key :mystery, String, :required => true # aka nutrition name to guess
 	key :win, Boolean, :required => true, :default => false
+	key :higher, Boolean, :required => true
 
 	key :product_ids, Array
   many :products, :in => :product_ids
