@@ -43,6 +43,16 @@ get "/json/play/?" do
 
   game = Game.new.generate_new_game_with_random_products_and_mystery
 
+  the_user = User.first(:username => session[:username])
+  the_user.games << game
+
+  if the_user.save!
+    #TODO better error handling probably someday maybe
+    p "okok en game würde gespeichert"
+  else
+    p "meeeeep"
+  end
+
   game.to_json
 end
 
