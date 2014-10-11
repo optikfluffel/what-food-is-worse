@@ -13,7 +13,7 @@ end
 
 configure :production do
   MongoMapper.setup({'production' => {'uri' => ENV['MONGOSOUP_URL']}}, 'production')
-  use Rack::Session::Pool, :key => ENV['SESSION_KEY']
+  use Rack::Session::Pool, :key => ENV['SESSION_KEY'], :expire_after => 60 * 60
 end
 
 configure do
