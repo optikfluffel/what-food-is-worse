@@ -58,7 +58,7 @@ $(document).ready(function () {
     var answer = $.parseJSON(data);
 
     // TODO: show nicer flash messages
-    if (answer.correct) {
+    if (answer.correct === true) {
       alert('YAY! You are totally right!');
     } else {
       alert('Oh no, I am sorry to correct you but it\'s the other way around.');
@@ -67,10 +67,11 @@ $(document).ready(function () {
   }
 
   function enableEvenFancierGameLinksSoYouCanActuallyPlayNow($link) {
-    var gameId = $link.data('game');
-    var id = $link.data('id');
     $link.click(function(event) {
       event.preventDefault();
+
+      var gameId = $link.data('game');
+      var id = $link.data('id');
 
       var answer = {
         game: gameId,
