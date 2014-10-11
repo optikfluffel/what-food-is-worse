@@ -5,13 +5,12 @@ require_relative 'models/data.rb'
 
 configure :development do
   MongoMapper.database = 'food'
+
+  # TODO: put somewhere less senseless
+  User.ensure_index(:username)
+  Product.ensure_index(:rnd)
+  use Rack::Session::Pool, :key => 'oejlydfiiiliqewzioc4q8327498p32c', :expire_after => 60 * 30
 end
-
-# TODO: put somewhere less senseless
-User.ensure_index(:username)
-Product.ensure_index(:rnd)
-use Rack::Session::Pool
-
 
 helpers do
   def authenticated?
@@ -33,7 +32,7 @@ get '/play' do
   if authenticated?
 
     # TODO: BEWARE, DREAMCODE AHEAD
-    game = generate_new_game_with_random_products_and_mystery
+    game = Game.new.generate_new_game_with_random_products_and_mystery
     erb :game, :locals => {:game => game}
 
   else

@@ -15,6 +15,16 @@ end
 class Game
 	include MongoMapper::EmbeddedDocument
 
+  def generate_new_game_with_random_products_and_mystery
+    the_game = Game.new
+
+    the_game.products << Product.new.random
+    the_game.products << Product.new.random
+
+    p the_game
+    the_game
+  end
+
 	key :mystery, String, :required => true # aka nutrition name to guess
 	key :win, Boolean, :required => true
 
