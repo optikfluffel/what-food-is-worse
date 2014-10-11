@@ -1,11 +1,13 @@
+<div class='row text-center'>
+  <h1><%= game.question %> <small>auf 100g</small></h1>
+</div>
 <div class='row'>
-  <h1><%= game.question %></h1>
+
   <% game.products.each do |product| %>
-
-    <div class='col-xs-12 col-md-6'>
-      <h2><%= product.name %></h2>
+    <div class='col-xs-12 col-md-6 text-center product'>
       <img src='<%= product.imgurl %>' alt='<%= product.name %>' />
+      <h3><%= product.name %></h3>
     </div>
-
   <% end %>
+
 </div>

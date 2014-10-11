@@ -6,3 +6,8 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.product img {
+  max-width: 600px;
+  max-height: 600px;
+}
