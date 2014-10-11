@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'json'
 require 'bcrypt'
 require_relative 'models/user.rb'
 require_relative 'models/data.rb'
@@ -55,33 +56,27 @@ post '/play' do
   if authenticated?
     the_user = User.first(:username => session[:username])
 
-    p params # TODO: REMOVE
-
     game_id = params['game']
     guess_id = params['guess']
 
-    p game_id # TODO: REMOVE
-    p guess_id # TODO: REMOVE
-
     game = the_user.games.find(game_id)
 
-    p game.products.include?(guess_id) # TODO: REMOVE
-
-    product_one = Product.find(game.products[0])
-    product_two = Product.find(game.products[1])
-
-    proposed_solution = Product.find(guess_id)
-
     mystery = game.mystery
-    candidate_one = product_one.nutritions.first(:name => mystery)
-    candidate_two = product_two.nutritions.first(:name => mystery)
 
-    maximum = [candidate_one.quantity, candidate_two.quantity].max
+    product_one = game.products[0]
+    product_two = game.products[1]
+
+    candidate_one = product_one.nutritions.select{ |nutrition| nutrition.name == mystery }
+    candidate_two = product_two.nutritions.select{ |nutrition| nutrition.name == mystery }
+
+    maximum = [candidate_one[0].quantity, candidate_two[0].quantity].max
+
+    proposed_solution = Product.find(guess_id).nutritions.select{ |nutrition| nutrition.name == mystery }
 
     if game.higher
-      correct = maximum == proposed_solution.quantity
+      correct = maximum == proposed_solution[0].quantity
     else
-      correct = maximum != proposed_solution.quantity
+      correct = maximum != proposed_solution[0].quantity
     end
 
     if correct
@@ -89,7 +84,7 @@ post '/play' do
       game.save!
     end
 
-    json :correct => correct
+    JSON :correct => correct
 
   else
     # TODO: show flash message
