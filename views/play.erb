@@ -1,0 +1,11 @@
+<div class='row'>
+  <h1><%= game.question %></h1>
+  <% game.products.each do |product| %>
+
+    <div class='col-xs-12 col-md-6'>
+      <h2><%= product.name %></h2>
+      <img src='<%= product.imgurl %>' alt='<%= product.name %>' />
+    </div>
+
+  <% end %>
+</div>

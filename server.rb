@@ -31,9 +31,8 @@ end
 get '/play' do
   if authenticated?
 
-    # TODO: BEWARE, DREAMCODE AHEAD
     game = Game.new.generate_new_game_with_random_products_and_mystery
-    erb :game, :locals => {:game => game}
+    erb :play, :locals => {:game => game}
 
   else
     # TODO: show flash message
