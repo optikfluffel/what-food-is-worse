@@ -23,8 +23,12 @@
           <div class='form-group'>
             <input type='password' class='form-control' name='password' placeholder='Password'>
           </div>
-          <button type='submit' class='btn btn-primary'>Login</button>
-          <button type='reset' class='btn btn-default reset'>Cancel</button>
+          <button type='submit' class='btn btn-primary'>
+            <span class="glyphicon glyphicon-chevron-right"></span> Login
+          </button>
+          <button type='reset' class='btn btn-default reset'>
+            <span class="glyphicon glyphicon-remove"></span> Cancel
+          </button>
         </form>
 
         <!-- Register -->
@@ -35,22 +39,30 @@
           <div class='form-group'>
             <input type='password' class='form-control' name='password' placeholder='Password'>
           </div>
-          <button type='submit' class='btn btn-primary'>Register</button>
-          <button type='reset' class='btn btn-default reset'>Cancel</button>
+          <button type='submit' class='btn btn-primary'>
+            <span class="glyphicon glyphicon-ok-circle"></span> Register
+          </button>
+          <button type='reset' class='btn btn-default reset'>
+            <span class="glyphicon glyphicon-remove"></span> Cancel
+          </button>
         </form>
 
         <ul class='nav navbar-nav navbar-right toggle-forms'>
-          <li><a href='#' class='login'>Login</a></li>
-          <li><a href='#' class='register'>Register</a></li>
+          <li><a href='#' class='login'>
+            <span class="glyphicon glyphicon-chevron-right"></span> Login
+          </a></li>
+          <li><a href='#' class='register'>
+            <span class="glyphicon glyphicon-ok-circle"></span> Register
+          </a></li>
         </ul>
 
       <% else %>
         <ul class='nav navbar-nav'>
-          <li><a href='/stats'>Statistics</a></li>
+          <li><a href='/stats'><span class="glyphicon glyphicon-stats"></span> Statistics</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a href='/logout'>Logout</a></li>
+          <li><a href='/logout'><span class="glyphicon glyphicon-remove"></span> Logout</a></li>
         </ul>
 
       <% end %>
