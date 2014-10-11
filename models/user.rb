@@ -18,10 +18,17 @@ class Game
   def generate_new_game_with_random_products_and_mystery
     the_game = Game.new
 
+    #TODO: check on the same Product
     the_game.products << Product.new.random
     the_game.products << Product.new.random
 
-    p the_game
+    first_game = the_game.products[0]
+
+    begin
+      random_nutrition = first_game.nutritions[rand(first_game.nutritions.length)]
+    end while the_game.products[1].nutritions.include?(:name => random_nutrition.name)
+
+    the_game.mystery = random_nutrition.name
     the_game
   end
 
