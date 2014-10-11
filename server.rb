@@ -37,6 +37,7 @@ get '/play' do
     erb :game, :locals => {:game => game}
 
   else
+    # TODO: show flash message
     redirect '/'
   end
 end
@@ -63,6 +64,7 @@ post '/login' do
     if user[:hash] == BCrypt::Engine.hash_secret(params[:password], user[:salt])
       session[:username] = params[:username]
     else
+      # TODO: show flash error
       redirect '/'
     end
   else
@@ -76,6 +78,8 @@ end
 get '/logout' do
   if authenticated?
     session.clear
+
+    # TODO: show flash message
     redirect '/'
   else
     halt 401, 'Not authorized.'
