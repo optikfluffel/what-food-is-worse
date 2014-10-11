@@ -51,6 +51,52 @@ get '/play' do
   end
 end
 
+post '/play' do
+  if authenticated?
+    the_user = User.first(:username => session[:username])
+
+    p params # TODO: REMOVE
+
+    game_id = params['game']
+    guess_id = params['guess']
+
+    p game_id # TODO: REMOVE
+    p guess_id # TODO: REMOVE
+
+    game = the_user.games.find(game_id)
+
+    p game.products.include?(guess_id) # TODO: REMOVE
+
+    product_one = Product.find(game.products[0])
+    product_two = Product.find(game.products[1])
+
+    proposed_solution = Product.find(guess_id)
+
+    mystery = game.mystery
+    candidate_one = product_one.nutritions.first(:name => mystery)
+    candidate_two = product_two.nutritions.first(:name => mystery)
+
+    maximum = [candidate_one.quantity, candidate_two.quantity].max
+
+    if game.higher
+      correct = maximum == proposed_solution.quantity
+    else
+      correct = maximum != proposed_solution.quantity
+    end
+
+    if correct
+      game.win = correct
+      game.save!
+    end
+
+    json :correct => correct
+
+  else
+    # TODO: show flash message
+    redirect '/'
+  end
+end
+
 
 post '/register' do
   salt = BCrypt::Engine.generate_salt
