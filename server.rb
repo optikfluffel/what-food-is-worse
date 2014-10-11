@@ -14,6 +14,10 @@ configure :development do
 end
 
 helpers do
+  def protected!
+    redirect '/' unless authenticated?
+  end
+
   def authenticated?
     !session[:username].nil?
   end
@@ -28,72 +32,71 @@ get '/' do
 	erb :index
 end
 
+get "/json/play/?" do
+  protected!
+  content_type :json
 
-get '/play' do
-  if authenticated?
+  game = Game.new.generate_new_game_with_random_products_and_mystery
 
-    game = Game.new.generate_new_game_with_random_products_and_mystery
-
-    the_user = User.first(:username => session[:username])
-    the_user.games << game
-
-    if the_user.save!
-      #TODO better error handling probably someday maybe
-      p "okok en game würde gespeichert"
-    else
-      p "meeeeep"
-    end
-
-    erb :play, :locals => {:game => game}
-
-  else
-    # TODO: show flash message
-    redirect '/'
-  end
+  game.to_json
 end
 
-post '/play' do
-  if authenticated?
-    the_user = User.first(:username => session[:username])
+get '/play/?' do
+  protected!
 
-    game_id = params['game']
-    guess_id = params['guess']
+  game = Game.new.generate_new_game_with_random_products_and_mystery
 
-    game = the_user.games.find(game_id)
+  the_user = User.first(:username => session[:username])
+  the_user.games << game
 
-    mystery = game.mystery
-
-    product_one = game.products[0]
-    product_two = game.products[1]
-
-    candidate_one = product_one.nutritions.select{ |nutrition| nutrition.name == mystery }
-    candidate_two = product_two.nutritions.select{ |nutrition| nutrition.name == mystery }
-
-    maximum = [candidate_one[0].quantity, candidate_two[0].quantity].max
-
-    proposed_solution = Product.find(guess_id).nutritions.select{ |nutrition| nutrition.name == mystery }
-
-    if game.higher
-      correct = maximum == proposed_solution[0].quantity
-    else
-      correct = maximum != proposed_solution[0].quantity
-    end
-
-    if correct
-      game.win = correct
-      game.save!
-    end
-
-    JSON :correct => correct
-
+  if the_user.save!
+    #TODO better error handling probably someday maybe
+    p "okok en game würde gespeichert"
   else
-    # TODO: show flash message
-    redirect '/'
+    p "meeeeep"
   end
+
+  erb :play, :locals => {:game => game}
+end
+
+post '/play/?' do
+  protected!
+
+  the_user = User.first(:username => session[:username])
+
+  game_id = params['game']
+  guess_id = params['guess']
+
+  game = the_user.games.find(game_id)
+
+  mystery = game.mystery
+
+  product_one = game.products[0]
+  product_two = game.products[1]
+
+  candidate_one = product_one.nutritions.select{ |nutrition| nutrition.name == mystery }
+  candidate_two = product_two.nutritions.select{ |nutrition| nutrition.name == mystery }
+
+  maximum = [candidate_one[0].quantity, candidate_two[0].quantity].max
+
+  proposed_solution = Product.find(guess_id).nutritions.select{ |nutrition| nutrition.name == mystery }
+
+  if game.higher
+    correct = maximum == proposed_solution[0].quantity
+  else
+    correct = maximum != proposed_solution[0].quantity
+  end
+
+  if correct
+    game.win = correct
+    game.save!
+  end
+
+  JSON :correct => correct
 end
 
 
-post '/register' do
+post '/register/?' do
   salt = BCrypt::Engine.generate_salt
   hash = BCrypt::Engine.hash_secret(params[:password], salt)
 
@@ -107,7 +110,7 @@ post '/register' do
 end
 
 
-post '/login' do
+post '/login/?' do
   user = User.first(:username => params[:username])
 
   unless user.nil?
@@ -125,7 +128,7 @@ post '/login' do
 end
 
 
-get '/logout' do
+get '/logout/?' do
   if authenticated?
     session.clear
 

@@ -55,4 +55,12 @@ class Game
   many :products, :in => :product_ids
 
 	timestamps!
+
+  def to_json(*a)
+      {
+        :id => _id,
+        :question => question,
+        :products => products.map { |prod| prod.to_json }
+      }.to_json(*a)
+  end
 end
