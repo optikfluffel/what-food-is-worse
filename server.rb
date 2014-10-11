@@ -8,9 +8,17 @@ configure :development do
   MongoMapper.database = 'food'
 
   # TODO: put somewhere less senseless
+  use Rack::Session::Pool, :key => 'oejlydfiiiliqewzioc4q8327498p32c', :expire_after => 60 * 30
+end
+
+configure :production do
+  MongoMapper.connection = Mongo::Connection.from_uri ENV['MONGOHQ_URL']
+  MongoMapper.database = URI.parse(ENV['MONGOHQ_URL']).path.gsub(/^\//, '') #Extracts 'dbname' from the uri
+end
+
+configure do
   User.ensure_index(:username)
   Product.ensure_index(:rnd)
-  use Rack::Session::Pool, :key => 'oejlydfiiiliqewzioc4q8327498p32c', :expire_after => 60 * 30
 end
 
 helpers do
