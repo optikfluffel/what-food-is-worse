@@ -26,9 +26,10 @@ class Game
 
     first_game = the_game.products[0]
 
-    begin
-      random_nutrition = first_game.nutritions[rand(first_game.nutritions.length)]
-    end while the_game.products[1].nutritions.include?(:name => random_nutrition.name)
+		#TODO: check on the same nutrition value
+		begin
+			random_nutrition = first_game.nutritions[rand(first_game.nutritions.length)]
+		end while the_game.products[1].nutritions.include?(:name => random_nutrition.name)
 
 		the_game.mystery = random_nutrition.name
 		the_game.mystery_text = random_nutrition.name.sub('davon ', '').sub('Energiewert', 'Kilokalorien')
