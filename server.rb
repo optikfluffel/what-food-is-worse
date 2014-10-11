@@ -12,8 +12,8 @@ configure :development do
 end
 
 configure :production do
-  MongoMapper.connection = Mongo::Connection.from_uri ENV['MONGOHQ_URL']
-  MongoMapper.database = URI.parse(ENV['MONGOHQ_URL']).path.gsub(/^\//, '') #Extracts 'dbname' from the uri
+  MongoMapper.setup({'production' => {'uri' => ENV['MONGOSOUP_URL']}}, 'production')
+  use Rack::Session::Pool, :key => ENV['SESSION_KEY']
 end
 
 configure do
