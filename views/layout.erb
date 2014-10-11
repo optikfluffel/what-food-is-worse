@@ -31,7 +31,46 @@
               <li><a href='/'>Home</a></li>
               <li><a href='#'>Link</a></li>
             </ul>
+
+
+            <% if username.nil? %>
+              <!-- Login -->
+              <form class='collapse navbar-form navbar-right login' action='login' method='post'> <!-- TODO: Add action -->
+                <div class='form-group'>
+                  <input type='text' class='form-control' name='username' placeholder='Username'>
+                </div>
+                <div class='form-group'>
+                  <input type='password' class='form-control' name='password' placeholder='Password'>
+                </div>
+                <button type='submit' class='btn btn-primary'>Login</button>
+                <button type='reset' class='btn btn-default reset'>Cancel</button>
+              </form>
+
+              <!-- Register -->
+              <form class='collapse navbar-form navbar-right register' action='register' method='post'> <!-- TODO: Add action -->
+                <div class='form-group'>
+                  <input type='text' class='form-control' name='username' placeholder='Username'>
+                </div>
+                <div class='form-group'>
+                  <input type='password' class='form-control' name='password' placeholder='Password'>
+                </div>
+                <button type='submit' class='btn btn-primary'>Register</button>
+                <button type='reset' class='btn btn-default reset'>Cancel</button>
+              </form>
+
+              <ul class='nav navbar-nav navbar-right toggle-forms'>
+                <li><a href='#' class='login'>Login</a></li>
+                <li><a href='#' class='register'>Register</a></li>
+              </ul>
+
+            <% else %>
+              <ul class="nav navbar-nav navbar-right">
+    		        <li><a href='/logout'>Logout</a></li>
+    		      </ul>
+
+            <% end %>
           </div> <!-- /.navbar-collapse -->
+
         </div> <!-- /.container-fluid -->
       </nav> <!-- /.navbar -->
 
@@ -47,8 +86,30 @@
     <!-- TODO: put in js file -->
     <script>
       $(document).ready(function () {
-        console.log($('a[href="' + this.location.pathname + '"]'));
+        // auto active
         $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
+
+        // show login
+        $('.toggle-forms a.login').click(function(event) {
+          event.preventDefault();
+          $(this).parents('.toggle-forms').hide();
+          $('.navbar-form.login').show();
+        });
+        $('.navbar-form.login .reset').click(function(event) {
+          $(this).parents('.navbar-form').hide();
+          $('#main-nav .toggle-forms').show();
+        });
+
+        // show register
+        $('.toggle-forms a.register').click(function(event) {
+          event.preventDefault();
+          $(this).parents('.toggle-forms').hide();
+          $('.navbar-form.register').show();
+        });
+        $('.navbar-form.register .reset').click(function(event) {
+          $(this).parents('.navbar-form').hide();
+          $('#main-nav .toggle-forms').show();
+        });
       });
     </script>
   </body>
