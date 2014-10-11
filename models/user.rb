@@ -24,14 +24,15 @@ class Game
     the_game.products << Product.new.random
     the_game.products << Product.new.random
 
-    first_game = the_game.products[0]
+    #TODO: check on the same nutrition value
+    array_one = the_game.products[0].nutritions.delete_if{ |n| n.quantity.nil? }.map { |nutritions| nutritions.name  }
+    array_two = the_game.products[1].nutritions.delete_if{ |n| n.quantity.nil? }.map { |nutritions| nutritions.name  }
+    array_union = array_one & array_two
 
-    begin
-      random_nutrition = first_game.nutritions[rand(first_game.nutritions.length)]
-    end while the_game.products[1].nutritions.include?(:name => random_nutrition.name)
+    random_mystery = array_union[rand(array_union.length)]
 
-		the_game.mystery = random_nutrition.name
-		the_game.mystery_text = random_nutrition.name.sub('davon ', '').sub('Energiewert', 'Kilokalorien')
+		the_game.mystery = random_mystery
+		the_game.mystery_text = random_mystery.sub('davon ', '').sub('Energiewert', 'Kilokalorien')
 
 		basic_text = 'Welches der beiden Produkte hat '
 		the_game.higher = [true, false][rand(2)]
@@ -55,4 +56,12 @@ class Game
   many :products, :in => :product_ids
 
 	timestamps!
+
+  def to_json(*a)
+      {
+        :id => _id,
+        :question => question,
+        :products => products.map { |prod| prod.to_json }
+      }.to_json(*a)
+  end
 end
