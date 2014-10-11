@@ -52,6 +52,8 @@ post '/login' do
     else
       redirect '/login'
     end
+  else
+    halt 401, 'Not authorized.'
   end
 
   redirect '/'
