@@ -37,7 +37,7 @@ get '/play' do
     erb :game, :locals => {:game => game}
 
   else
-    redirect '/login'
+    redirect '/'
   end
 end
 
@@ -63,7 +63,7 @@ post '/login' do
     if user[:hash] == BCrypt::Engine.hash_secret(params[:password], user[:salt])
       session[:username] = params[:username]
     else
-      redirect '/login'
+      redirect '/'
     end
   else
     halt 401, 'Not authorized.'
