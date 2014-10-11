@@ -24,6 +24,7 @@ class Game
     the_game.products << Product.new.random
     the_game.products << Product.new.random
 
+    #TODO: check on the same nutrition value
     array_one = the_game.products[0].nutritions.delete_if{ |n| n.quantity.nil? }.map { |nutritions| nutritions.name  }
     array_two = the_game.products[1].nutritions.delete_if{ |n| n.quantity.nil? }.map { |nutritions| nutritions.name  }
     array_union = array_one & array_two
