@@ -1,6 +1,6 @@
 # What food is worse?
 
-[hackzurich 2014](http://hackzurich.com) project using migros api preview
+[Hackzurich 2014](http://hackzurich.com) project using Migros API preview.
 
 
 ## Setup for development
