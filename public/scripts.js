@@ -8,6 +8,7 @@ $(document).ready(function () {
       event.preventDefault();
       $(this).parents('.toggle-forms').hide();
       $('.navbar-form.' + type).show();
+      $('.navbar-form.' + type).find('input[name="username"]').focus();
     });
 
     // cancel
