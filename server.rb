@@ -25,7 +25,6 @@ end
 
 
 get '/' do
-  p Product.new.random
 	erb :index
 end
 
