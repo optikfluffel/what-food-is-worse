@@ -5,18 +5,15 @@ require_relative 'models/user.rb'
 require_relative 'models/data.rb'
 
 configure :development do
-  MongoMapper.database = 'food'
-
-  # TODO: put somewhere less senseless
-  use Rack::Session::Pool, :key => 'oejlydfiiiliqewzioc4q8327498p32c', :expire_after => 60 * 30
+  use Rack::Session::Pool, :key => 'thisisoursuperduperprivatekey!!', :expire_after => 60 * 10
 end
 
 configure :production do
-  MongoMapper.setup({'production' => {'uri' => ENV['MONGOSOUP_URL']}}, 'production')
   use Rack::Session::Pool, :key => ENV['SESSION_KEY'], :expire_after => 60 * 60
 end
 
 configure do
+  MongoMapper.database = 'food'
   User.ensure_index(:username)
   Product.ensure_index(:rnd)
 end
