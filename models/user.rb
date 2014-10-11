@@ -15,6 +15,8 @@ end
 class Game
 	include MongoMapper::EmbeddedDocument
 
+	attr_accessor :question
+
   def generate_new_game_with_random_products_and_mystery
     the_game = Game.new
 
@@ -28,7 +30,13 @@ class Game
       random_nutrition = first_game.nutritions[rand(first_game.nutritions.length)]
     end while the_game.products[1].nutritions.include?(:name => random_nutrition.name)
 
-    the_game.mystery = random_nutrition.name
+		the_game.mystery = random_nutrition.name.sub('davon ', '')
+
+		basic_text = 'Welches der beiden Produkte hat '
+		mehr_oder_weniger = ['mehr ', 'weniger '][rand(2)]
+
+		the_game.question = basic_text + mehr_oder_weniger + the_game.mystery + '?'
+
     the_game
   end
 
