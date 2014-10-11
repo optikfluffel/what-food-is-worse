@@ -15,7 +15,9 @@ class Product
 
   def random
     p = Product.first(:rnd.gte => rand())
-    random if p == nil
+    self.random if p == nil
+
+    p
   end
 end
 
