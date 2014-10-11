@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'bcrypt'
 require_relative 'models/user.rb'
+require_relative 'models/data.rb'
 
 configure :development do
   MongoMapper.database = 'food'
