@@ -1,4 +1,5 @@
 require 'mongo_mapper'
+require 'securerandom'
 
 class Product
   include MongoMapper::Document
@@ -6,7 +7,12 @@ class Product
   key :productNummber, String, :require => true
   key :name, String, :require => true
   key :imgurl, String, :require => true
+  key :rnd, Float, :require => true
   many :nutritions
+
+  def random
+    Product.first(:rnd.gte => rand())
+  end
 end
 
 class Nutrition

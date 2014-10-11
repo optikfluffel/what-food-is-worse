@@ -9,6 +9,7 @@ end
 
 # TODO: put somewhere less senseless
 User.ensure_index(:username)
+Product.ensure_index(:rnd)
 use Rack::Session::Pool
 
 
@@ -24,6 +25,7 @@ end
 
 
 get '/' do
+  p Product.new.random
 	erb :index
 end
 
