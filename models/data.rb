@@ -7,6 +7,8 @@ class Product
   key :name, String, :require => true
   key :imgurl, String, :require => true
   many :nutritions
+
+  timestamps!
 end
 
 class Nutrition
