@@ -8,6 +8,7 @@ class Product
   key :name, String, :require => true
   key :imgurl, String, :require => true
   key :rnd, Float, :require => true
+  key :leshopurl, String, :require => true
 
   timestamps!
 
