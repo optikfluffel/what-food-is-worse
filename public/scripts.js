@@ -20,4 +20,27 @@ $(document).ready(function () {
 
   enableFancyLoginAndRegisterNavbarForm('login');
   enableFancyLoginAndRegisterNavbarForm('register');
+
+  function enableEvenFancierGameLinksSoYouCanActuallyPlayNow($link) {
+    var gameId = $link.data('game');
+    var id = $link.data('id');
+    $link.click(function(event) {
+      event.preventDefault();
+
+      var answer = {
+        game: gameId,
+        guess: id
+      }
+
+      $.post( '/play', answer).done(function(result) {
+        alert( "Data Loaded: " + result );
+        console.log( "Data Loaded: " + result );
+      });
+    });
+    console.log(id);
+  };
+
+  $('.game-link').each(function() {
+    enableEvenFancierGameLinksSoYouCanActuallyPlayNow($(this));
+  });
 });

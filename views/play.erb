@@ -3,8 +3,8 @@
 </div>
 <div class='row'>
 
-  <% game.products.each do |product| %>
-    <div class='col-xs-12 col-md-6 text-center product'>
+  <% game.products.each_with_index do |product, index| %>
+    <div class='col-xs-12 col-md-6 text-center product game-link' data-game='<%= game.id %>' data-id='<%= product.id %>'>
       <img src='<%= product.imgurl %>' alt='<%= product.name %>' />
       <h3><%= product.name %></h3>
     </div>

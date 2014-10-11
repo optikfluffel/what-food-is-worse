@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'json'
 require 'bcrypt'
 require_relative 'models/user.rb'
 require_relative 'models/data.rb'
@@ -44,6 +45,46 @@ get '/play' do
     end
 
     erb :play, :locals => {:game => game}
+
+  else
+    # TODO: show flash message
+    redirect '/'
+  end
+end
+
+post '/play' do
+  if authenticated?
+    the_user = User.first(:username => session[:username])
+
+    game_id = params['game']
+    guess_id = params['guess']
+
+    game = the_user.games.find(game_id)
+
+    mystery = game.mystery
+
+    product_one = game.products[0]
+    product_two = game.products[1]
+
+    candidate_one = product_one.nutritions.select{ |nutrition| nutrition.name == mystery }
+    candidate_two = product_two.nutritions.select{ |nutrition| nutrition.name == mystery }
+
+    maximum = [candidate_one[0].quantity, candidate_two[0].quantity].max
+
+    proposed_solution = Product.find(guess_id).nutritions.select{ |nutrition| nutrition.name == mystery }
+
+    if game.higher
+      correct = maximum == proposed_solution[0].quantity
+    else
+      correct = maximum != proposed_solution[0].quantity
+    end
+
+    if correct
+      game.win = correct
+      game.save!
+    end
+
+    JSON :correct => correct
 
   else
     # TODO: show flash message
