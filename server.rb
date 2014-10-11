@@ -29,6 +29,19 @@ get '/' do
 end
 
 
+get '/play' do
+  if authenticated?
+
+    # TODO: BEWARE, DREAMCODE AHEAD
+    game = generate_new_game_with_random_products_and_mystery
+    erb :game, :locals => {:game => game}
+
+  else
+    redirect '/login'
+  end
+end
+
+
 post '/register' do
   salt = BCrypt::Engine.generate_salt
   hash = BCrypt::Engine.hash_secret(params[:password], salt)
