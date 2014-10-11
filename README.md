@@ -13,6 +13,8 @@ _Make sure you have [rvm](https://rvm.io) installed
 * If you haven't already install bundler using `gem install bundler`
 * Run `bundle install`
 * Make sure you have [mongoDB](http://www.mongodb.org) installed, up and running
+* If you make changes be sure you have [EditorConfig](http://editorconfig.org) setup in your editor
+or at least try to follow the rules at `.editorconfig`
 
 ### Start server
 
