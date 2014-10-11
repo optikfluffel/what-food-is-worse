@@ -57,6 +57,10 @@ end
 
 
 get '/logout' do
-  session.clear
-  redirect '/'
+  if authenticated?
+    session.clear
+    redirect '/'
+  else
+    halt 401, 'Not authorized.'
+  end
 end
