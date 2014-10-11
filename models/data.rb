@@ -14,7 +14,8 @@ class Product
   many :nutritions
 
   def random
-    Product.first(:rnd.gte => rand())
+    p = Product.first(:rnd.gte => rand())
+    random if p == nil
   end
 end
 
