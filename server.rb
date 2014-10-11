@@ -9,7 +9,7 @@ configure :development do
 end
 
 configure :production do
-  use Rack::Session::Pool, :key => ENV['SESSION_KEY'], :expire_after => 60 * 60
+  use Rack::Session::Pool, :key => 'session', :expire_after => 60 * 60
 end
 
 configure do
