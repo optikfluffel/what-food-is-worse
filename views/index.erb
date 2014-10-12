@@ -1,7 +1,24 @@
-<h1>
+<h1 class='page-header title'>
   <% unless username.nil? %>
     Howdy <%= username %>! Lust auf <a href='/play' title='Neue Runde starten'>ein Spiel?</a>
   <% else %>
     Du musst dich einloggen um spielen zu können, sorry.
   <% end %>
 </h1>
+
+<style media="screen">
+  html {
+    background: url(/bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  body {
+    background: 0;
+  }
+  h1.title {
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+  }
+</style>
