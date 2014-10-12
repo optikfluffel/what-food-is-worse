@@ -13,7 +13,7 @@ class User
 end
 
 class Game
-	include MongoMapper::EmbeddedDocument
+	include MongoMapper::Document
 
 	attr_accessor :question, :mystery_text
 
@@ -51,6 +51,8 @@ class Game
 	key :mystery, String, :required => true # aka nutrition name to guess
 	key :win, Boolean, :required => true, :default => false
 	key :higher, Boolean, :required => true
+
+	belongs_to :user
 
 	key :product_ids, Array
   many :products, :in => :product_ids

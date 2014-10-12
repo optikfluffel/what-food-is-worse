@@ -2,6 +2,12 @@ $(document).ready(function () {
   // auto active
   $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
 
+  // init popovers
+  $('body').popover({
+    selector: '[data-toggle=popover]',
+    container: 'body'
+  });
+
   function enableFancyLoginAndRegisterNavbarForm(type) {
     // show
     $('.toggle-forms a.' + type).click(function(event) {
@@ -54,16 +60,33 @@ $(document).ready(function () {
     })
   }
 
+  function showAlert(message, type) {
+    $messages = $('#messages');
+
+    $alert = $('<div />').addClass('alert')
+                         .addClass('alert-' + type)
+                         .attr('role', 'alert')
+                         .text(message)
+                         .hide();
+
+    $alert.appendTo($messages).slideDown(500, function() {
+      $.getJSON('/json/play', initializeNewGameRound);
+
+      $(this).delay(1000).slideUp(500, function() { $(this).remove(); });
+    });
+  }
+
+  $(".alert").alert() // enable alert dismissing
+
   function handlePlayAPIAnswer(data) {
     var answer = $.parseJSON(data);
 
     // TODO: show nicer flash messages
     if (answer.correct === true) {
-      alert('YAY! You are totally right!');
+      showAlert('YAY! You are totally right!', 'success');
     } else {
-      alert('Oh no, I am sorry to correct you but it\'s the other way around.');
+      showAlert('Oh no, I am sorry to correct you but it\'s the other way around.', 'danger');
     }
-    $.getJSON('/json/play', initializeNewGameRound);
   }
 
   function enableEvenFancierGameLinksSoYouCanActuallyPlayNow($link) {
