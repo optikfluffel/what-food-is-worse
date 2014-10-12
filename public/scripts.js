@@ -92,7 +92,6 @@ $(document).ready(function () {
   function handlePlayAPIAnswer(data) {
     var answer = $.parseJSON(data);
 
-    // TODO: show nicer flash messages
     if (answer.correct === true) {
       showAlert('YAY! Das war richtig!', 'success');
     } else {
@@ -111,8 +110,6 @@ $(document).ready(function () {
         game: gameId,
         guess: id
       };
-
-      // TODO: Spinner and deactivation etc
 
       $.post('/play', answer).done(handlePlayAPIAnswer);
     });
