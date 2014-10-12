@@ -2,6 +2,8 @@
 
 [Hackzurich 2014](http://hackzurich.com) project using Migros API preview.
 
+Currently online at [what-food-is-worse.fluffel.io](http://what-food-is-worse.fluffel.io)
+
 
 ## Setup for development
 
