@@ -111,6 +111,36 @@ post '/play/?' do
 end
 
 
+get '/stats/?' do
+  protected!
+
+  the_user = User.first(:username => session[:username])
+
+  games_lost_overall = the_user.games.where(:win => false).count
+  games_won_overall = the_user.games.where(:win => true).count
+
+  games_lost_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :win => false).count
+  games_won_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :win => true).count
+
+  games_lost_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :win => false).count
+  games_won_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :win => true).count
+
+  p "games_lost_last_week #{games_lost_last_week}"
+  p "games_won_last_week #{games_won_last_week}"
+
+  stats = {
+    :lost_overall => games_lost_overall,
+    :won_overall => games_won_overall,
+    :lost_last_week => games_lost_last_week,
+    :won_last_week => games_won_last_week,
+    :lost_today => games_lost_today,
+    :won_today => games_won_today
+  }
+
+  erb :stats, :locals => {:stats => stats}
+end
+
+
 post '/register/?' do
   salt = BCrypt::Engine.generate_salt
   hash = BCrypt::Engine.hash_secret(params[:password], salt)
