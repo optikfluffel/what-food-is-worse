@@ -41,3 +41,7 @@ body {
 body {
   background-color: #f8f8f8;
 }
+
+.alert {
+  text-align: center;
+}

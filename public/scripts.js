@@ -1,4 +1,7 @@
 $(document).ready(function () {
+  // foo
+  var SLIDE_TEMPO = 500;
+
   // auto active
   $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
 
@@ -52,11 +55,19 @@ $(document).ready(function () {
       $(this).data('id', newChoiceId);
 
       $image = $(this).children('img');
-      $image.attr('src', newChoice.imgurl)
-            .attr('alt', newChoice.name);
+      $image.slideUp(SLIDE_TEMPO, function() {
+        $(this).attr('src', newChoice.imgurl)
+               .attr('alt', newChoice.name)
+               .delay(500)
+               .slideDown(SLIDE_TEMPO);
+      })
 
       $name = $(this).children('h3');
-      $name.text(newChoice.name);
+      $name.slideUp(SLIDE_TEMPO, function() {
+        $(this).text(newChoice.name)
+               .delay(500)
+               .slideDown(SLIDE_TEMPO);
+      })
     })
   }
 
@@ -69,10 +80,10 @@ $(document).ready(function () {
                          .text(message)
                          .hide();
 
-    $alert.appendTo($messages).slideDown(500, function() {
+    $alert.appendTo($messages).slideDown(SLIDE_TEMPO, function() {
       $.getJSON('/json/play', initializeNewGameRound);
 
-      $(this).delay(1000).slideUp(500, function() { $(this).remove(); });
+      $(this).delay(1000).slideUp(SLIDE_TEMPO, function() { $(this).remove(); });
     });
   }
 
@@ -83,9 +94,9 @@ $(document).ready(function () {
 
     // TODO: show nicer flash messages
     if (answer.correct === true) {
-      showAlert('YAY! You are totally right!', 'success');
+      showAlert('YAY! Das war richtig!', 'success');
     } else {
-      showAlert('Oh no, I am sorry to correct you but it\'s the other way around.', 'danger');
+      showAlert('Och menno, gib dir doch mal etwas mehr Mühe..', 'danger');
     }
   }
 
