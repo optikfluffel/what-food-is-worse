@@ -1,4 +1,4 @@
-<div id='fiftycent'> <!-- because we need a (w)rapper XD -->
+<div id='fiftycent'> <%# because we need a (w)rapper XD %>
 
   <div class='question row text-center'>
     <h1 class='page-header'><%= game.question %> <small>auf 100g</small></h1>
@@ -13,7 +13,7 @@
         <img src='<%= product.imgurl %>' alt='<%= product.name %>' class='img-responsive' />
       </div>
 
-      <% if index == 0 %> <!-- divider -->
+      <% if index == 0 %> <%# divider %>
 
         <div class='col-md-1 hidden-xs hidden-sm text-center'>
           <button type='button' class='btn btn-default helper' data-toggle='popover' data-trigger='focus' data-placement='bottom' data-content='Klick einfach auf das Produkt von dem du denkst, dass die Aussage oben stimmt.'>

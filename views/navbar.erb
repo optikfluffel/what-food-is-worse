@@ -1,6 +1,6 @@
 <nav class='navbar navbar-default navbar-fixed-top' role='navigation'>
   <div class='container-fluid'>
-    <!-- Brand and toggle get grouped for better mobile display -->
+    <%# Brand and toggle get grouped for better mobile display %>
     <div class='navbar-header'>
       <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#main-nav'>
         <span class='sr-only'>Toggle navigation</span>
@@ -10,12 +10,12 @@
       </button>
 
       <a class='navbar-brand' href='/'><span class="glyphicon glyphicon-leaf green"></span> What food is worse?</a>
-    </div> <!-- /.navbar-header -->
+    </div> <%# /.navbar-header %>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
+    <%# Collect the nav links, forms, and other content for toggling %>
     <div class='collapse navbar-collapse' id='main-nav'>
       <% if username.nil? %>
-        <!-- Login -->
+        <%# Login %>
         <form class='collapse navbar-form navbar-right login' action='login' method='post'>
           <div class='form-group'>
             <input type='text' class='form-control' name='username' placeholder='Username'>
@@ -31,7 +31,7 @@
           </button>
         </form>
 
-        <!-- Register -->
+        <%# Register %>
         <form class='collapse navbar-form navbar-right register' action='register' method='post'>
           <div class='form-group'>
             <input type='text' class='form-control' name='username' placeholder='Username'>
@@ -56,7 +56,7 @@
           </a></li>
         </ul>
 
-      <% else %>
+      <% else %> <%# User is authenticated %>
         <ul class='nav navbar-nav'>
           <li><a href='/play'><span class="glyphicon glyphicon-flash yellow"></span> <b>Neues Runde spielen</b></a></li>
           <li><a href='/stats'><span class="glyphicon glyphicon-stats blue"></span> Statistiken</a></li>
@@ -67,7 +67,7 @@
         </ul>
 
       <% end %>
-    </div> <!-- /.navbar-collapse -->
+    </div> <%# /.navbar-collapse %>
 
-  </div> <!-- /.container-fluid -->
-</nav> <!-- /.navbar -->
+  </div> <%# /.container-fluid %>
+</nav> <%# /.navbar %>
