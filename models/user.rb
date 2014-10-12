@@ -34,16 +34,15 @@ class Game
 		the_game.mystery = random_mystery
 		the_game.mystery_text = random_mystery.sub('davon ', '').sub('Energiewert', 'Kilokalorien')
 
-		basic_text = 'Welches der beiden Produkte hat '
 		the_game.higher = [true, false][rand(2)]
 
 		if the_game.higher
-			higherText = 'mehr '
+			higherText = 'Mehr '
 		else
-			higherText = 'weniger '
+			higherText = 'Weniger '
 		end
 
-		the_game.question = basic_text + higherText + the_game.mystery_text + '?'
+		the_game.question = higherText + the_game.mystery_text + '?'
 
     the_game
   end
