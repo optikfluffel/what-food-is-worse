@@ -36,3 +36,7 @@ an API from Migros
 
 * Just run `rackup`
 * Visit [localhost:9292](http://localhost:9292) in your browser
+
+## Kudos
+
+Special thanks to [Anthony Albright](https://www.flickr.com/photos/anthonyalbright) for the [background image](https://flic.kr/p/8bxaWw).
