@@ -3,7 +3,19 @@ body {
 }
 
 .green {
-  color: green;
+  color: #3c763d;
+}
+
+.yellow {
+  color: #FFD700;
+}
+
+.blue {
+  color: #4169E1;
+}
+
+.red {
+  color: #a94442;
 }
 
 #wrapper {
