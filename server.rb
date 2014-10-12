@@ -104,7 +104,7 @@ post '/play/?' do
 
   game.win = correct
   game.save!
-  
+
   JSON :correct => correct
 end
 
@@ -145,7 +145,12 @@ post '/register/?' do
 
   user = User.new(:username => params[:username], :hash => hash, :salt => salt)
 
-  user.save!
+  begin
+    user.save!
+  rescue MongoMapper::DocumentNotValid => e
+    #TODO warn user
+    redirect '/'
+  end
 
   session[:username] = user[:username]
 
