@@ -1,20 +1,24 @@
 <div class='row text-center'>
   <div class='col-xs-12 col-md-4'>
     <div id='chart-today'></div>
-    <h3 class='text-success'>Heute gewonnen: <%= stats[:won_today] %></h3>
-    <h3 class='text-danger'>Heute verloren: <%= stats[:lost_today] %></h3>
+    <h4 class='text-success'>Heute gewonnen: <%= stats[:won_today] %></h4>
+    <h4 class='text-danger'>Heute verloren: <%= stats[:lost_today] %></h4>
   </div>
+
+  <hr class='visible-xs'>
 
   <div class='col-xs-12 col-md-4'>
     <div id='chart-last-week'></div>
-    <h3 class='text-success'>Letzte Woche gewonnen: <%= stats[:won_last_week] %></h3>
-    <h3 class='text-danger'>Letzte Woche verloren: <%= stats[:lost_last_week] %></h3>
+    <h4 class='text-success'>Letzte Woche gewonnen: <%= stats[:won_last_week] %></h4>
+    <h4 class='text-danger'>Letzte Woche verloren: <%= stats[:lost_last_week] %></h4>
   </div>
+
+  <hr class='visible-xs'>
 
   <div class='col-xs-12 col-md-4'>
     <div id='chart-overall'></div>
-    <h3 class='text-success'>Insgesammt gewonnen: <%= stats[:won_overall] %></h3>
-    <h3 class='text-danger'>Insgesammt verloren: <%= stats[:lost_overall] %></h3>
+    <h4 class='text-success'>Insgesammt gewonnen: <%= stats[:won_overall] %></h4>
+    <h4 class='text-danger'>Insgesammt verloren: <%= stats[:lost_overall] %></h4>
   </div>
 </div>
 
