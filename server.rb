@@ -102,11 +102,9 @@ post '/play/?' do
     correct = maximum != proposed_solution[0].quantity
   end
 
-  if correct
-    game.win = correct
-    game.save!
-  end
-
+  game.win = correct
+  game.save!
+  
   JSON :correct => correct
 end
 

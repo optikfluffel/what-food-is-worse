@@ -48,7 +48,7 @@ class Game
   end
 
 	key :mystery, String, :required => true # aka nutrition name to guess
-	key :win, Boolean, :required => true, :default => false
+	key :win, Boolean
 	key :higher, Boolean, :required => true
 
 	belongs_to :user
