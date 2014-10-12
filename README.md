@@ -18,6 +18,15 @@ _Make sure you have [rvm](https://rvm.io) installed
 * If you make changes be sure you have [EditorConfig](http://editorconfig.org) setup in your editor
 or at least try to follow the rules at `.editorconfig`
 
+
+### Initial Data Import
+
+* Go and get the [MScraper](https://github.com/fliiiix/MScraper)
+* Simply run it with `ruby scraper_take2.rb` to get the Data from the temporarily opened Preview of
+an API from Migros
+* Wait a minute or two
+
+
 ### Start server
 
 * Just run `rackup`
