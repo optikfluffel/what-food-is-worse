@@ -60,15 +60,15 @@ $(document).ready(function () {
                .attr('alt', newChoice.name)
                .delay(500)
                .slideDown(SLIDE_TEMPO);
-      })
+      });
 
       $name = $(this).children('h3');
       $name.slideUp(SLIDE_TEMPO, function() {
         $(this).text(newChoice.name)
                .delay(500)
                .slideDown(SLIDE_TEMPO);
-      })
-    })
+      });
+    });
   }
 
   function showAlert(message, type) {
@@ -86,8 +86,6 @@ $(document).ready(function () {
       $(this).delay(1000).slideUp(SLIDE_TEMPO, function() { $(this).remove(); });
     });
   }
-
-  $(".alert").alert() // enable alert dismissing
 
   function handlePlayAPIAnswer(data) {
     var answer = $.parseJSON(data);
@@ -118,4 +116,60 @@ $(document).ready(function () {
   $('.game-link').each(function() {
     enableEvenFancierGameLinksSoYouCanActuallyPlayNow($(this));
   });
+
+  function drawStatsCharts(stats) {
+    var chartColors = { 'Gewonnen': '#3c763d',
+                        'Verloren': '#a94442' };
+
+    var chartToday = c3.generate({
+      bindto: '#chart-today',
+      data: {
+          columns: [
+              ['Gewonnen', stats.today.won],
+              ['Verloren', stats.today.lost]
+          ],
+          type : 'donut',
+          colors: chartColors
+      },
+      donut: {
+          title: 'Heute'
+      }
+    });
+
+    var chartLastWeek = c3.generate({
+      bindto: '#chart-last-week',
+      data: {
+          columns: [
+              ['Gewonnen', stats.lastWeek.won],
+              ['Verloren', stats.lastWeek.lost]
+          ],
+          type : 'donut',
+          colors: chartColors
+      },
+      donut: {
+          title: 'Letzte Woche'
+      }
+    });
+
+    var chartOverall = c3.generate({
+      bindto: '#chart-overall',
+      data: {
+        columns: [
+          ['Gewonnen', stats.overall.won],
+          ['Verloren', stats.overall.lost]
+        ],
+        type : 'donut',
+        colors: chartColors
+      },
+      donut: {
+        title: 'Insgesammt'
+      }
+    });
+  }
+
+  if (window.statsData) {
+    drawStatsCharts(window.statsData);
+  }
+
+
 });

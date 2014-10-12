@@ -1,5 +1,3 @@
-<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/c3/0.3.0/c3.min.css' media='screen' charset='utf-8'>
-
 <div class='row text-center'>
   <div class='col-xs-12 col-md-4'>
     <div id='chart-today'></div>
@@ -20,57 +18,19 @@
   </div>
 </div>
 
-<script charset='utf-8' src='//cdnjs.cloudflare.com/ajax/libs/c3/0.3.0/c3.min.js'></script>
-<script charset='utf-8' src='//cdnjs.cloudflare.com/ajax/libs/d3/3.4.12/d3.min.js'></script>
-
-<script charset='utf-8'>
-  var chartColors = {
-    'Gewonnen': '#3c763d',
-    'Verloren': '#a94442'
+<script charset="utf-8">
+  window.statsData = {
+    today: {
+      won: <%= stats[:won_today] %>,
+      lost: <%= stats[:lost_today] %>
+    },
+    lastWeek: {
+      won: <%= stats[:won_last_week] %>,
+      lost: <%= stats[:lost_last_week] %>
+    },
+    overall: {
+      won: <%= stats[:won_overall] %>,
+      lost: <%= stats[:lost_overall] %>
+    }
   }
-
-  var chartToday = c3.generate({
-    bindto: '#chart-today',
-    data: {
-        columns: [
-            ['Gewonnen', <%= stats[:won_today] %>],
-            ['Verloren', <%= stats[:lost_today] %>],
-        ],
-        type : 'donut',
-        colors: chartColors
-    },
-    donut: {
-        title: 'Heute'
-    }
-  });
-
-  var chartLastWeek = c3.generate({
-    bindto: '#chart-last-week',
-    data: {
-        columns: [
-            ['Gewonnen', <%= stats[:won_last_week] %>],
-            ['Verloren', <%= stats[:lost_last_week] %>],
-        ],
-        type : 'donut',
-        colors: chartColors
-    },
-    donut: {
-        title: 'Letzte Woche'
-    }
-  });
-
-  var chartOverall = c3.generate({
-    bindto: '#chart-overall',
-    data: {
-      columns: [
-        ['Gewonnen', <%= stats[:won_overall] %>],
-        ['Verloren', <%= stats[:lost_overall] %>],
-      ],
-      type : 'donut',
-      colors: chartColors
-    },
-    donut: {
-      title: 'Insgesammt'
-    }
-  });
 </script>
