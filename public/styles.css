@@ -75,3 +75,7 @@ footer {
 footer p {
   margin-top: 1.3em;
 }
+
+.left-bottom .github-fork-ribbon {
+  background-color: #3c763d;
+}
