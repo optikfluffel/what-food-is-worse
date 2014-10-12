@@ -175,6 +175,10 @@ post '/login/?' do
   redirect '/'
 end
 
+get '/supersecret/?' do # jk ;D - you all can know if you want to
+  "Users: #{User.all.count}\nGames lost: #{Game.where(:win => false).count}\nGames won: #{Game.where(:win => true).count}"
+end
+
 
 get '/logout/?' do
   if authenticated?
