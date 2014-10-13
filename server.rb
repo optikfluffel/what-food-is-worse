@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/assetpack'
 require 'json'
 require 'bcrypt'
 require_relative 'models/user.rb'
@@ -16,6 +17,23 @@ configure do
   MongoMapper.database = 'food'
   User.ensure_index(:username)
   Product.ensure_index(:rnd)
+end
+
+
+assets do
+   css :application, [
+    '/css/styles.css',
+    '/css/d3.css'
+   ]
+
+   js :application, [
+    '/js/scripts.js',
+    '/js/c3.min.js',
+    '/js/d3.min.js'
+   ]
+
+  css_compression :simple
+  js_compression :jsmin
 end
 
 helpers do
