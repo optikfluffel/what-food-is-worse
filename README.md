@@ -1,5 +1,7 @@
 # What food is worse?
 
+[![Travis](https://img.shields.io/travis/optikfluffel/what-food-is-worse.svg?style=flat)](https://travis-ci.org/optikfluffel/what-food-is-worse)
+
 [Hackzurich 2014](http://hackzurich.com) project using Migros API preview.
 
 Currently available publicly at [what-food-is-worse.fluffel.io](http://what-food-is-worse.fluffel.io).
