@@ -1,3 +1,4 @@
+require 'rake'
 require 'sinatra'
 require 'json'
 require 'bcrypt'
@@ -12,6 +13,11 @@ end
 configure :production do
   use Rack::Session::Pool, :key => 'session', :expire_after => 60 * 60
   MongoMapper.setup({'production' => {'uri' => ENV['MONGOSOUP_URL']}}, 'production')
+end
+
+configure :test do
+  use Rack::Session::Pool, :key => 'session', :expire_after => 60
+  MongoMapper.database = 'food-test'
 end
 
 configure do
