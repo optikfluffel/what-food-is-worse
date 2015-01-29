@@ -41,3 +41,7 @@ an API from Migros
 ## Kudos
 
 Special thanks to [Anthony Albright](https://www.flickr.com/photos/anthonyalbright) for the [background image](https://flic.kr/p/8bxaWw).
+
+## License
+
+This is under [WTFPL](http://www.wtfpl.net) - see [`LICENSE`](https://github.com/optikfluffel/what-food-is-worse/blob/master/LICENSE) for full license text.
