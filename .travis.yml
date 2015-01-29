@@ -3,5 +3,12 @@ language: ruby
 rvm:
   - 2.2.0
 
+# Using faster container based build environment.
+sudo: false
+
 services:
   - mongodb
+
+notifications:
+  slack:
+    secure: WiknGrMbu8llQc6tG6cf0y8ZOmTVtmtzJhlW2NGQwdqEJdvTt5N7KuIBifOXboYnWIo4AjCO9VN8QHHlFdTRysgb0ZIfQO3aG6aLqwn2LgDqm3qa1z6EKaL8wQx10ZErAJQD82dB0F0BjOeuqpPWsm+ZWIkK+9iT9TPBoQwMzgE=
