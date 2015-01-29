@@ -3,5 +3,8 @@ language: ruby
 rvm:
   - 2.2.0
 
+# Using faster container based build environment.
+sudo: false
+
 services:
   - mongodb
