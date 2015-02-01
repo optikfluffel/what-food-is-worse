@@ -28,7 +28,7 @@ GEM
     plucky (0.6.6)
       mongo (~> 1.5)
     power_assert (0.2.2)
-    rack (1.6.0)
+    rack (1.5.2)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -52,6 +52,7 @@ DEPENDENCIES
   bcrypt
   bson_ext
   mongo_mapper
+  rack (= 1.5.2)
   rack-test
   rake
   sinatra
