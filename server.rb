@@ -12,7 +12,10 @@ end
 
 configure :production do
   use Rack::Session::Pool, :key => 'session', :expire_after => 60 * 60
-  MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
+  
+  MongoMapper.connection = Mongo::Connection.new(ENV["OPENSHIFT_MONGODB_DB_HOST"], ENV["OPENSHIFT_MONGODB_DB_PORT"].to_i)
+  MongoMapper.database = ENV["OPENSHIFT_APP_NAME"]
+  MongoMapper.database.authenticate(ENV["OPENSHIFT_MONGODB_DB_USERNAME"], ENV["OPENSHIFT_MONGODB_DB_PASSWORD"])  
 end
 
 configure :test do
