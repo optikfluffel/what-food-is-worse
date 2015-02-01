@@ -1,25 +1,18 @@
 language: ruby
-
 rvm:
-  - 2.0.0
-
-# Using faster container based build environment.
+- 2.0.0
 sudo: false
-
 services:
-  - mongodb
-
+- mongodb
 notifications:
   slack:
     secure: WiknGrMbu8llQc6tG6cf0y8ZOmTVtmtzJhlW2NGQwdqEJdvTt5N7KuIBifOXboYnWIo4AjCO9VN8QHHlFdTRysgb0ZIfQO3aG6aLqwn2LgDqm3qa1z6EKaL8wQx10ZErAJQD82dB0F0BjOeuqpPWsm+ZWIkK+9iT9TPBoQwMzgE=
-
 deploy:
   provider: openshift
   user: l33tname@outlook.com
   password:
-    secure: hynlswjwK9D62Z02TcWB9qQDHvx5hyF4rTuRz65PMPSIKuRCdbjGbrSAZlrdzwD3SzHBP7V3fU1Ku/euqElGzlenETNELE/LtCXLxgKUqwq4lzL5X1ljuyA3KD97ex2eFjcdCCur7YzgzAYSbRr9rGl5dHZtn68zOC89yJ0mACM=
+    secure: c90yHVClyES7k5i4I6qgwmR6bZXJH7d4f/6g1YkSn6gAbE5zYafnBD1+ugTG5EUCCDdEji7otNnri/R6wKYhoDSLq0WoOGrbVIu3VdvYzXAH03rB4vcC/ksdxKh3zvsgwPDjiffmgcsmcYzj7CMYzrFMzJeDFdYSIZ4zSZXEk2k=
   app: whichfoodisbetter
   domain: l33tname
   on:
-    repo: optikfluffel/what-food-is-worse 
-
+    repo: optikfluffel/what-food-is-worse
