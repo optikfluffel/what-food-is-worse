@@ -7,6 +7,7 @@ gem 'sinatra'
 gem 'mongo_mapper'
 gem 'bson_ext'
 gem 'bcrypt'
+gem 'sinatra-r18n'
 
 group :test do
   gem 'rack-test'
