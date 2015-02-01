@@ -1,8 +1,8 @@
 <h1 class='page-header title'>
   <% unless username.nil? %>
-    Howdy <%= username %>! Lust auf <a href='/play' title='Neue Runde starten'>ein Spiel?</a>
+    <%= t.login.authenticated(username) %>
   <% else %>
-    Du musst dich einloggen um spielen zu können, sorry.
+    <%= t.login.unauthenticated %>
   <% end %>
 </h1>
 

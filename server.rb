@@ -27,6 +27,9 @@ end
 configure do
   User.ensure_index(:username)
   Product.ensure_index(:rnd)
+
+  #set default locale
+  R18n::I18n.default = 'de'
 end
 
 helpers do
