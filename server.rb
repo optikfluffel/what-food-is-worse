@@ -12,7 +12,7 @@ end
 
 configure :production do
   use Rack::Session::Pool, :key => 'session', :expire_after => 60 * 60
-  MongoMapper.setup({'production' => {'uri' => ENV['MONGOSOUP_URL']}}, 'production')
+  MongoMapper.setup({'production' => {'uri' => ENV['OPENSHIFT_MONGODB_DB_URL']}}, 'production')
 end
 
 configure :test do
