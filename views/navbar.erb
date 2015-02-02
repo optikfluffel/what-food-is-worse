@@ -18,10 +18,10 @@
         <%# Login %>
         <form class='collapse navbar-form navbar-right login' action='login' method='post'>
           <div class='form-group'>
-            <input type='text' class='form-control' name='username' placeholder='Username'>
+            <input type='text' class='form-control' name='username' placeholder='<%= t.login.username %>'>
           </div>
           <div class='form-group'>
-            <input type='password' class='form-control' name='password' placeholder='Password'>
+            <input type='password' class='form-control' name='password' placeholder='<%= t.login.password %>'>
           </div>
           <button type='submit' class='btn btn-primary'>
             <span class="glyphicon glyphicon-chevron-right"></span> <%= t.action.login %>
@@ -34,10 +34,10 @@
         <%# Register %>
         <form class='collapse navbar-form navbar-right register' action='register' method='post'>
           <div class='form-group'>
-            <input type='text' class='form-control' name='username' placeholder='Username'>
+            <input type='text' class='form-control' name='username' placeholder='<%= t.login.username %>'>
           </div>
           <div class='form-group'>
-            <input type='password' class='form-control' name='password' placeholder='Password'>
+            <input type='password' class='form-control' name='password' placeholder='<%= t.login.password %>'>
           </div>
           <button type='submit' class='btn btn-primary'>
             <span class="glyphicon glyphicon-ok-circle"></span> <%= t.action.register %>

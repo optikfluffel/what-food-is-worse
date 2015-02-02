@@ -29,7 +29,7 @@ configure do
   Product.ensure_index(:rnd)
 
   #set default locale
-  R18n::I18n.default = 'de'
+  R18n::I18n.default = 'arrrr'
 end
 
 helpers do
@@ -49,6 +49,11 @@ end
 
 get '/' do
 	erb :index
+end
+
+get '/scripts.js' do
+  content_type 'application/javascript'
+  erb "scripts.js".to_sym, :layout => false
 end
 
 get "/json/play/?" do

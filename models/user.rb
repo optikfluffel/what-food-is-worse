@@ -42,7 +42,7 @@ class Game
 			higherText = 'Weniger '
 		end
 
-		the_game.question = higherText + the_game.mystery_text + '?'
+		the_game.question = "#{higherText} #{the_game.mystery_text}?"
 
     the_game
   end
