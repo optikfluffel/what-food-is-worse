@@ -5,6 +5,7 @@ class User
 	include MongoMapper::Document
 
 	key :username, String, :required => true, :length => 3..50, :unique => true
+  key :locals,   String, :default => "de"
 	key :hash,     String, :required => true
 	key :salt,     String, :required => true
 

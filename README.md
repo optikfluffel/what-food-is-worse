@@ -42,6 +42,8 @@ an API from Migros
 
 Special thanks to [Anthony Albright](https://www.flickr.com/photos/anthonyalbright) for the [background image](https://flic.kr/p/8bxaWw).
 
+Flag images are from [365icon](http://365icon.com/icon-styles/ethnic/classic2/).
+
 ## License
 
 This is under [WTFPL](http://www.wtfpl.net) - see [`LICENSE`](https://github.com/optikfluffel/what-food-is-worse/blob/master/LICENSE) for full license text.
