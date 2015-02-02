@@ -24,3 +24,15 @@ stats:
     today: Heute
     lastWeek: Letzte Woche
     overall: Insgesammt
+nutrition:
+  higherText: Mehr
+  lowerText: Weniger
+  Kilokalorien: Kilokalorien
+  Eiweiss: Eiweiss
+  Kohlenhydrate: Kohlenhydrate
+  Zucker: Zucker
+  Fett: Fett
+  gesättigteFettsäuren: gesättigte Fettsäuren
+  Ballaststoffe: Ballaststoffe
+  Natrium: Natrium
+  Kochsalz: Kochsalz

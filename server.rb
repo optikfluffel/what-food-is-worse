@@ -29,7 +29,7 @@ configure do
   Product.ensure_index(:rnd)
 
   #set default locale
-  R18n::I18n.default = 'arrrr'
+  R18n::I18n.default = 'de'
 end
 
 helpers do
