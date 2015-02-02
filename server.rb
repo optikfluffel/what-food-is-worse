@@ -51,6 +51,25 @@ get '/' do
 	erb :index
 end
 
+get '/setlocals/:id/?' do |code|
+  protected!
+
+  the_user = User.first(:username => session[:username])
+  the_user.locals = code
+
+  if the_user.save!
+    #TODO better error handling probably someday maybe
+    p "okok en game würde gespeichert"
+  else
+    p "meeeeep"
+  end
+
+  locale = R18n.locale(code)
+  session[:locale] = locale
+
+  redirect back
+end
+
 get '/scripts.js' do
   content_type 'application/javascript'
   erb "scripts.js".to_sym, :layout => false
@@ -183,6 +202,9 @@ post '/login/?' do
   unless user.nil?
     if user[:hash] == BCrypt::Engine.hash_secret(params[:password], user[:salt])
       session[:username] = params[:username]
+
+      locale = R18n.locale(user.locals)
+      session[:locale] = locale
     else
       # TODO: show flash error
       redirect '/'

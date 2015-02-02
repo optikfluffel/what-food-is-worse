@@ -65,13 +65,13 @@
         <ul class="nav navbar-nav navbar-right">
           <li>
             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="locale" type="button">
-              Hey Ho
+              <img src="/flags/<%= session[:locale].code %>.png" alt="<%= session[:locale].code %>"> <%= session[:locale].title %>
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="locale">
               <% for locale in r18n.available_locales %>
               <li role="presentation">
-                <a role="menuitem" tabindex="-1" href="#">
+                <a role="menuitem" tabindex="-1" href="/setlocals/<%= locale.code %>">
                   <img src="/flags/<%= locale.code %>.png" alt="<%= locale.title %>"> <%= locale.title %>
                 </a>
               </li>
