@@ -46,12 +46,19 @@ helpers do
   end
 end
 
+before do
+  session[:locale] ||= "en"
+  the_user = User.first(:username => session[:username])
+  session[:locale] = the_user.locals unless the_user.nil?
+end
 
 get '/' do
 	erb :index
 end
 
 get '/setlocals/:id/?' do |code|
+  session[:locale] = code
+
   protected!
 
   the_user = User.first(:username => session[:username])
@@ -63,9 +70,6 @@ get '/setlocals/:id/?' do |code|
   else
     p "meeeeep"
   end
-
-  locale = R18n.locale(code)
-  session[:locale] = locale
 
   redirect back
 end
@@ -202,9 +206,7 @@ post '/login/?' do
   unless user.nil?
     if user[:hash] == BCrypt::Engine.hash_secret(params[:password], user[:salt])
       session[:username] = params[:username]
-
-      locale = R18n.locale(user.locals)
-      session[:locale] = locale
+      session[:locale] = user.locals
     else
       # TODO: show flash error
       redirect '/'

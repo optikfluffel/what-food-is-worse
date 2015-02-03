@@ -12,8 +12,25 @@
       <a class='navbar-brand' href='/'><span class="glyphicon glyphicon-leaf green"></span> Which food is better?</a>
     </div> <%# /.navbar-header %>
 
-    <%# Collect the nav links, forms, and other content for toggling %>
-    <div class='collapse navbar-collapse' id='main-nav'>
+    <ul class='nav navbar-nav navbar-right'>
+      <li>
+        <div class='collapse navbar-collapse' id='main-nav'>
+          <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="locale" type="button">
+            <img src="/flags/<%= R18n.locale(session[:locale]).code %>.png" alt="<%= R18n.locale(session[:locale]).code %>"> <%= R18n.locale(session[:locale]).title %>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="locale">
+            <% for locale in r18n.available_locales %>
+            <li role="presentation">
+              <a role="menuitem" tabindex="-1" href="/setlocals/<%= locale.code %>">
+                <img src="/flags/<%= locale.code %>.png" alt="<%= locale.title %>"> <%= locale.title %>
+              </a>
+            </li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+      <%# Collect the nav links, forms, and other content for toggling %>
       <% if username.nil? %>
         <%# Login %>
         <form class='collapse navbar-form navbar-right login' action='login' method='post'>
@@ -63,21 +80,6 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li>
-            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="locale" type="button">
-              <img src="/flags/<%= session[:locale].code %>.png" alt="<%= session[:locale].code %>"> <%= session[:locale].title %>
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="locale">
-              <% for locale in r18n.available_locales %>
-              <li role="presentation">
-                <a role="menuitem" tabindex="-1" href="/setlocals/<%= locale.code %>">
-                  <img src="/flags/<%= locale.code %>.png" alt="<%= locale.title %>"> <%= locale.title %>
-                </a>
-              </li>
-              <% end %>
-            </ul>
-          </li>
           <li><a href='/logout'><span class="glyphicon glyphicon-remove red"></span> <%= t.action.logout %></a></li>
         </ul>
 
