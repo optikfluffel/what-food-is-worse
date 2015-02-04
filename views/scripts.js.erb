@@ -15,15 +15,15 @@ $(document).ready(function () {
     // show
     $('.toggle-forms a.' + type).click(function(event) {
       event.preventDefault();
-      $(this).parents('.toggle-forms').hide();
-      $('.navbar-form.' + type).show();
+      $(this).parents('.toggle-forms').addClass("collapse");
+      $('.navbar-form.' + type).removeClass("collapse");
       $('.navbar-form.' + type).find('input[name="username"]').focus();
     });
 
     // cancel
     $('.navbar-form.' + type + ' .reset').click(function(event) {
-      $(this).parents('.navbar-form').hide();
-      $('#main-nav .toggle-forms').show();
+      $(this).parents('.navbar-form').addClass("collapse");
+      $('#main-nav .toggle-forms').removeClass("collapse");
     });
   }
 
