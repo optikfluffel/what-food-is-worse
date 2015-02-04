@@ -41,12 +41,12 @@ class Game
 		the_game.higher = [true, false][rand(2)]
 
 		if the_game.higher
-			higherText = t.nutrition.higherText
+			comparisonText = t.nutrition.higherText
 		else
-			higherText = t.nutrition.lowerText
+			comparisonText = t.nutrition.lowerText
 		end
 
-		the_game.question = "#{higherText} #{the_game.mystery_text}?"
+		the_game.question = "#{comparisonText} #{the_game.mystery_text}?"
 
     the_game
   end
