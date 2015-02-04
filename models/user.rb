@@ -1,9 +1,11 @@
 require 'mongo_mapper'
+include R18n::Helpers
 
 class User
 	include MongoMapper::Document
 
 	key :username, String, :required => true, :length => 3..50, :unique => true
+  key :locals,   String, :default => "en"
 	key :hash,     String, :required => true
 	key :salt,     String, :required => true
 
@@ -32,17 +34,19 @@ class Game
     random_mystery = array_union[rand(array_union.length)]
 
 		the_game.mystery = random_mystery
-		the_game.mystery_text = random_mystery.sub('davon ', '').sub('Energiewert', 'Kilokalorien')
+
+    key = random_mystery.sub('davon ', '').sub('Energiewert', 'Kilokalorien').sub(' ', '')
+    the_game.mystery_text = t.nutrition[key.to_sym]
 
 		the_game.higher = [true, false][rand(2)]
 
 		if the_game.higher
-			higherText = 'Mehr '
+			comparisonText = t.nutrition.higherText
 		else
-			higherText = 'Weniger '
+			comparisonText = t.nutrition.lowerText
 		end
 
-		the_game.question = higherText + the_game.mystery_text + '?'
+		the_game.question = "#{comparisonText} #{the_game.mystery_text}?"
 
     the_game
   end

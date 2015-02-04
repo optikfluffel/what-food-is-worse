@@ -12,58 +12,78 @@
       <a class='navbar-brand' href='/'><span class="glyphicon glyphicon-leaf green"></span> Which food is better?</a>
     </div> <%# /.navbar-header %>
 
-    <%# Collect the nav links, forms, and other content for toggling %>
     <div class='collapse navbar-collapse' id='main-nav'>
+      <ul class='nav navbar-nav navbar-right'>
+        <%# i18n switch %>
+        <li>
+          <a class="dropdown-toggle" data-toggle="dropdown" id="locale">
+            <img src="/flags/<%= R18n.locale(session[:locale]).code %>.png" alt="<%= R18n.locale(session[:locale]).code %>"> <%= R18n.locale(session[:locale]).title %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="locale">
+            <% for locale in r18n.available_locales %>
+            <li role="presentation">
+              <a role="menuitem" tabindex="-1" href="/setlocals/<%= locale.code %>">
+                <img src="/flags/<%= locale.code %>.png" alt="<%= locale.title %>"> <%= locale.title %>
+              </a>
+            </li>
+            <% end %>
+          </ul>
+        </li> <%# /i18n switch %>
+      </ul>
+
+      <%# Collect the nav links, forms, and other content for toggling %>
       <% if username.nil? %>
         <%# Login %>
         <form class='collapse navbar-form navbar-right login' action='login' method='post'>
           <div class='form-group'>
-            <input type='text' class='form-control' name='username' placeholder='Username'>
+            <input type='text' class='form-control' name='username' placeholder='<%= t.login.username %>'>
           </div>
           <div class='form-group'>
-            <input type='password' class='form-control' name='password' placeholder='Password'>
+            <input type='password' class='form-control' name='password' placeholder='<%= t.login.password %>'>
           </div>
           <button type='submit' class='btn btn-primary'>
-            <span class="glyphicon glyphicon-chevron-right"></span> Einloggen
+            <span class="glyphicon glyphicon-chevron-right"></span> <%= t.action.login %>
           </button>
           <button type='reset' class='btn btn-default reset'>
-            <span class="glyphicon glyphicon-remove"></span> Abbrechen
+            <span class="glyphicon glyphicon-remove"></span> <%= t.action.cancel %>
           </button>
         </form>
 
         <%# Register %>
         <form class='collapse navbar-form navbar-right register' action='register' method='post'>
           <div class='form-group'>
-            <input type='text' class='form-control' name='username' placeholder='Username'>
+            <input type='text' class='form-control' name='username' placeholder='<%= t.login.username %>'>
           </div>
           <div class='form-group'>
-            <input type='password' class='form-control' name='password' placeholder='Password'>
+            <input type='password' class='form-control' name='password' placeholder='<%= t.login.password %>'>
           </div>
           <button type='submit' class='btn btn-primary'>
-            <span class="glyphicon glyphicon-ok-circle"></span> Registrieren
+            <span class="glyphicon glyphicon-ok-circle"></span> <%= t.action.register %>
           </button>
           <button type='reset' class='btn btn-default reset'>
-            <span class="glyphicon glyphicon-remove"></span> Abbrechen
+            <span class="glyphicon glyphicon-remove"></span> <%= t.action.cancel %>
           </button>
         </form>
 
+        <%# Login & Register Links to hide/show forms %>
         <ul class='nav navbar-nav navbar-right toggle-forms'>
           <li><a href='#' class='login'>
-            <span class="glyphicon glyphicon-chevron-right yellow"></span> Login
+            <span class="glyphicon glyphicon-chevron-right yellow"></span> <%= t.action.login %>
           </a></li>
           <li><a href='#' class='register'>
-            <span class="glyphicon glyphicon-ok-circle blue"></span> Register
+            <span class="glyphicon glyphicon-ok-circle blue"></span> <%= t.action.register %>
           </a></li>
         </ul>
 
       <% else %> <%# User is authenticated %>
         <ul class='nav navbar-nav'>
-          <li><a href='/play'><span class="glyphicon glyphicon-flash yellow"></span> <b>Neues Runde spielen</b></a></li>
-          <li><a href='/stats'><span class="glyphicon glyphicon-stats blue"></span> Statistiken</a></li>
+          <li><a href='/play'><span class="glyphicon glyphicon-flash yellow"></span> <b><%= t.navigation.newgame %></b></a></li>
+          <li><a href='/stats'><span class="glyphicon glyphicon-stats blue"></span> <%= t.navigation.stats %></a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a href='/logout'><span class="glyphicon glyphicon-remove red"></span> Ausloggen</a></li>
+          <li><a href='/logout'><span class="glyphicon glyphicon-remove red"></span> <%= t.action.logout %></a></li>
         </ul>
 
       <% end %>

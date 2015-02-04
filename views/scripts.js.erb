@@ -15,15 +15,15 @@ $(document).ready(function () {
     // show
     $('.toggle-forms a.' + type).click(function(event) {
       event.preventDefault();
-      $(this).parents('.toggle-forms').hide();
-      $('.navbar-form.' + type).show();
+      $(this).parents('.toggle-forms').addClass("collapse");
+      $('.navbar-form.' + type).removeClass("collapse");
       $('.navbar-form.' + type).find('input[name="username"]').focus();
     });
 
     // cancel
     $('.navbar-form.' + type + ' .reset').click(function(event) {
-      $(this).parents('.navbar-form').hide();
-      $('#main-nav .toggle-forms').show();
+      $(this).parents('.navbar-form').addClass("collapse");
+      $('#main-nav .toggle-forms').removeClass("collapse");
     });
   }
 
@@ -43,7 +43,7 @@ $(document).ready(function () {
     var $choices = $products.children('.game-link');
 
     // update question
-    var $smallQuestionExtension = $('<small />').text('auf 100g');
+    var $smallQuestionExtension = $('<small />').text('<%= t.game.measurement %>');
     $question.text(newQuestion).append($smallQuestionExtension);
 
     // update choices
@@ -91,9 +91,9 @@ $(document).ready(function () {
     var answer = $.parseJSON(data);
 
     if (answer.correct === true) {
-      showAlert('YAY! Das war richtig!', 'success');
+      showAlert('<%= t.game.message.won %>', 'success');
     } else {
-      showAlert('Och menno, gib dir doch mal etwas mehr Mühe..', 'danger');
+      showAlert('<%= t.game.message.lost %>', 'danger');
     }
   }
 
@@ -118,21 +118,21 @@ $(document).ready(function () {
   });
 
   function drawStatsCharts(stats) {
-    var chartColors = { 'Gewonnen': '#3c763d',
-                        'Verloren': '#a94442' };
+    var chartColors = { '<%= t.stats.won %>': '#3c763d',
+                        '<%= t.stats.lost %>': '#a94442' };
 
     var chartToday = c3.generate({
       bindto: '#chart-today',
       data: {
           columns: [
-              ['Gewonnen', stats.today.won],
-              ['Verloren', stats.today.lost]
+              ['<%= t.stats.won %>', stats.today.won],
+              ['<%= t.stats.lost %>', stats.today.lost]
           ],
           type : 'donut',
           colors: chartColors
       },
       donut: {
-          title: 'Heute'
+          title: '<%= t.stats.timespan.today %>'
       }
     });
 
@@ -140,14 +140,14 @@ $(document).ready(function () {
       bindto: '#chart-last-week',
       data: {
           columns: [
-              ['Gewonnen', stats.lastWeek.won],
-              ['Verloren', stats.lastWeek.lost]
+              ['<%= t.stats.won %>', stats.lastWeek.won],
+              ['<%= t.stats.lost %>', stats.lastWeek.lost]
           ],
           type : 'donut',
           colors: chartColors
       },
       donut: {
-          title: 'Letzte Woche'
+          title: '<%= t.stats.timespan.lastWeek %>'
       }
     });
 
@@ -155,14 +155,14 @@ $(document).ready(function () {
       bindto: '#chart-overall',
       data: {
         columns: [
-          ['Gewonnen', stats.overall.won],
-          ['Verloren', stats.overall.lost]
+          ['<%= t.stats.won %>', stats.overall.won],
+          ['<%= t.stats.lost %>', stats.overall.lost]
         ],
         type : 'donut',
         colors: chartColors
       },
       donut: {
-        title: 'Insgesammt'
+        title: '<%= t.stats.timespan.overall %>'
       }
     });
   }

@@ -1,0 +1,38 @@
+login:
+  username: Username
+  password: Passwort
+  authenticated: Howdy %1! Lust auf <a href='/play' title='Neue Runde starten'>ein Spiel?</a>
+  unauthenticated: 'Du musst dich einloggen um spielen zu können, sorry.'
+navigation:
+  newgame: Neues Runde spielen
+  stats: Statistiken
+action:
+  login: Login
+  logout: Ausloggen
+  register: Registrieren
+  cancel: Abbrechen
+game:
+  message:
+    won: YAY! Das war richtig!
+    lost: 'Och menno, gib dir doch mal etwas mehr Mühe..'
+  measurement: auf 100g
+  help: 'Klick einfach auf das Produkt von dem du denkst, dass die Aussage oben stimmt.'
+stats:
+  won: gewonnen
+  lost: verloren
+  timespan:
+    today: Heute
+    lastWeek: Letzte Woche
+    overall: Insgesammt
+nutrition:
+  higherText: Mehr
+  lowerText: Weniger
+  Kilokalorien: Kilokalorien
+  Eiweiss: Eiweiss
+  Kohlenhydrate: Kohlenhydrate
+  Zucker: Zucker
+  Fett: Fett
+  gesättigteFettsäuren: gesättigte Fettsäuren
+  Ballaststoffe: Ballaststoffe
+  Natrium: Natrium
+  Kochsalz: Kochsalz

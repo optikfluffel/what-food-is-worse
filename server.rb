@@ -2,6 +2,7 @@ require 'rake'
 require 'sinatra'
 require 'json'
 require 'bcrypt'
+require 'sinatra/r18n'
 require_relative 'models/user.rb'
 require_relative 'models/data.rb'
 
@@ -12,10 +13,10 @@ end
 
 configure :production do
   use Rack::Session::Pool, :key => 'session', :expire_after => 60 * 60
-  
+
   MongoMapper.connection = Mongo::Connection.new(ENV["OPENSHIFT_MONGODB_DB_HOST"], ENV["OPENSHIFT_MONGODB_DB_PORT"].to_i)
   MongoMapper.database = ENV["OPENSHIFT_APP_NAME"]
-  MongoMapper.database.authenticate(ENV["OPENSHIFT_MONGODB_DB_USERNAME"], ENV["OPENSHIFT_MONGODB_DB_PASSWORD"])  
+  MongoMapper.database.authenticate(ENV["OPENSHIFT_MONGODB_DB_USERNAME"], ENV["OPENSHIFT_MONGODB_DB_PASSWORD"])
 end
 
 configure :test do
@@ -26,6 +27,9 @@ end
 configure do
   User.ensure_index(:username)
   Product.ensure_index(:rnd)
+
+  #set default locale
+  R18n::I18n.default = 'de'
 end
 
 helpers do
@@ -42,9 +46,37 @@ helpers do
   end
 end
 
+before do
+  session[:locale] ||= "en"
+  the_user = User.first(:username => session[:username])
+  session[:locale] = the_user.locals unless the_user.nil?
+end
 
 get '/' do
 	erb :index
+end
+
+get '/setlocals/:id/?' do |code|
+  session[:locale] = code
+
+  protected!
+
+  the_user = User.first(:username => session[:username])
+  the_user.locals = code
+
+  if the_user.save!
+    #TODO better error handling probably someday maybe
+    p "okok en game würde gespeichert"
+  else
+    p "meeeeep"
+  end
+
+  redirect back
+end
+
+get '/scripts.js' do
+  content_type 'application/javascript'
+  erb "scripts.js".to_sym, :layout => false
 end
 
 get "/json/play/?" do
@@ -174,6 +206,7 @@ post '/login/?' do
   unless user.nil?
     if user[:hash] == BCrypt::Engine.hash_secret(params[:password], user[:salt])
       session[:username] = params[:username]
+      session[:locale] = user.locals
     else
       # TODO: show flash error
       redirect '/'

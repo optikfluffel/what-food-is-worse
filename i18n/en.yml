@@ -1,0 +1,38 @@
+login:
+  username: Username
+  password: Password
+  authenticated: Howdy %1! Do you wanna play a <a href='/play' title='start a new game'>game</a>?
+  unauthenticated: 'You will need to log in to play, sorry.'
+navigation:
+  newgame: Start a new game
+  stats: Statistics
+action:
+  login: Login
+  logout: Logout
+  register: Register
+  cancel: Cancel
+game:
+  message:
+    won: YAY! This was true!
+    lost: 'Ohhh no, please try a little harder..'
+  measurement: per 100g
+  help: 'Just click on the product, where you think the statement from above applies.'
+stats:
+  won: won
+  lost: lost
+  timespan:
+    today: Today
+    lastWeek: Last week
+    overall: Overall
+nutrition:
+  higherText: More
+  lowerText: Less
+  Kilokalorien: kilocalorie
+  Eiweiss: protein
+  Kohlenhydrate: carbohydrates
+  Zucker: sugar
+  Fett: fat
+  gesättigteFettsäuren: saturated fatty acids
+  Ballaststoffe: dietary fiber
+  Natrium: sodium
+  Kochsalz: salt
