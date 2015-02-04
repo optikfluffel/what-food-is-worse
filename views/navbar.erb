@@ -12,13 +12,14 @@
       <a class='navbar-brand' href='/'><span class="glyphicon glyphicon-leaf green"></span> Which food is better?</a>
     </div> <%# /.navbar-header %>
 
-    <ul class='nav navbar-nav navbar-right'>
-      <li>
-        <div class='collapse navbar-collapse' id='main-nav'>
-          <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="locale" type="button">
+    <div class='collapse navbar-collapse' id='main-nav'>
+      <ul class='nav navbar-nav navbar-right'>
+        <%# i18n switch %>
+        <li>
+          <a class="dropdown-toggle" data-toggle="dropdown" id="locale">
             <img src="/flags/<%= R18n.locale(session[:locale]).code %>.png" alt="<%= R18n.locale(session[:locale]).code %>"> <%= R18n.locale(session[:locale]).title %>
             <span class="caret"></span>
-          </button>
+          </a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="locale">
             <% for locale in r18n.available_locales %>
             <li role="presentation">
@@ -28,8 +29,9 @@
             </li>
             <% end %>
           </ul>
-        </li>
+        </li> <%# /i18n switch %>
       </ul>
+
       <%# Collect the nav links, forms, and other content for toggling %>
       <% if username.nil? %>
         <%# Login %>
@@ -64,6 +66,7 @@
           </button>
         </form>
 
+        <%# Login & Register Links to hide/show forms %>
         <ul class='nav navbar-nav navbar-right toggle-forms'>
           <li><a href='#' class='login'>
             <span class="glyphicon glyphicon-chevron-right yellow"></span> <%= t.action.login %>
