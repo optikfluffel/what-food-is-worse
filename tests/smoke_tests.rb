@@ -16,4 +16,18 @@ class SmokeTest < Test::Unit::TestCase
     get "/"
     assert last_response.ok?
   end
+
+  def test_random_crap_fails
+    get "/lol/catpoop.php"
+    assert !last_response.ok?
+  end
+
+  #def test_setlocal
+  #  get '/setlocals/de'
+  #  follow_redirect!
+  #
+  #  # fix test with session
+  #  assert_equal 'de', app.inspect
+  #  assert last_response.ok?
+  #end
 end
