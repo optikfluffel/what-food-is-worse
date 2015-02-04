@@ -14,9 +14,9 @@ action:
 game:
   message:
     won: YAY! This was true!
-    lost: 'Ohhh no try harder..'
+    lost: 'Ohhh no, please try a little harder..'
   measurement: per 100g
-  help: 'Just click on the product, where the statement from above applies.'
+  help: 'Just click on the product, where you think the statement from above applies.'
 stats:
   won: won
   lost: lost
@@ -25,8 +25,8 @@ stats:
     lastWeek: Last week
     overall: Overall
 nutrition:
-  higherText: more
-  lowerText: less
+  higherText: More
+  lowerText: Less
   Kilokalorien: kilocalorie
   Eiweiss: protein
   Kohlenhydrate: carbohydrates

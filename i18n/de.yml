@@ -1,6 +1,6 @@
 login:
   username: Username
-  password: Passowort
+  password: Passwort
   authenticated: Howdy %1! Lust auf <a href='/play' title='Neue Runde starten'>ein Spiel?</a>
   unauthenticated: 'Du musst dich einloggen um spielen zu können, sorry.'
 navigation:
@@ -9,7 +9,7 @@ navigation:
 action:
   login: Login
   logout: Ausloggen
-  register: Register
+  register: Registrieren
   cancel: Abbrechen
 game:
   message:
