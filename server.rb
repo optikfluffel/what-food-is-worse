@@ -56,6 +56,13 @@ get '/' do
 	erb :index
 end
 
+get '/locals/:id.json' do |code|
+  content_type :json
+
+  "lostMessages = #{t.game.message.lost}\n" +
+  "wonMessages = #{t.game.message.won}"
+end
+
 get '/setlocals/:id/?' do |code|
   session[:locale] = code
 
