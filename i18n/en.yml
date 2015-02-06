@@ -13,8 +13,16 @@ action:
   cancel: Cancel
 game:
   message:
-    won: 'YAY! This was true!|awesome|well done|You sir, are a genius!'
-    lost: 'close but no cigar|sorry that was wrong|common you can do that better|ohhh no, try a little harder..'
+    won:
+      - YAY! This was true!
+      - awesome
+      - well done
+      - 'You sir, are a genius!'
+    lost:
+      - close but no cigar
+      - sorry that was wrong
+      - common you can do that better
+      - 'ohhh no, try a little harder..'
   measurement: per 100g
   help: 'Just click on the product, where you think the statement from above applies.'
 stats:
