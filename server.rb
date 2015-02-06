@@ -53,6 +53,8 @@ before do
 end
 
 get '/' do
+  p t.game.message.lost.split('|')
+  p t.game.message.lost.split('|').sample
 	erb :index
 end
 

@@ -91,9 +91,11 @@ $(document).ready(function () {
     var answer = $.parseJSON(data);
 
     if (answer.correct === true) {
-      showAlert('<%= t.game.message.won %>', 'success');
+      var wonMessages = '<%= t.game.message.won %>'.split('|');
+      showAlert(wonMessages[Math.floor(Math.random()*wonMessages.length)], 'success');
     } else {
-      showAlert('<%= t.game.message.lost %>', 'danger');
+      var lostMessages = '<%= t.game.message.lost %>'.split('|');
+      showAlert(lostMessages[Math.floor(Math.random()*lostMessages.length)], 'danger');
     }
   }
 

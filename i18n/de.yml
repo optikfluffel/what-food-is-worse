@@ -13,8 +13,8 @@ action:
   cancel: Abbrechen
 game:
   message:
-    won: YAY! Das war richtig!
-    lost: 'Och menno, gib dir doch mal etwas mehr Mühe..'
+    won: 'YAY! Das war richtig!|Toll!|Gut gemacht|Weiter so!'
+    lost: 'Och menno, gib dir doch mal etwas mehr Mühe..|Das war leider falsch|Vielleicht nächstes Mal'
   measurement: auf 100g
   help: 'Klick einfach auf das Produkt von dem du denkst, dass die Aussage oben stimmt.'
 stats:
