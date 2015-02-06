@@ -17,14 +17,14 @@
         <%# i18n switch %>
         <li>
           <a class="dropdown-toggle" data-toggle="dropdown" id="locale">
-            <img src="/flags/<%= R18n.locale(session[:locale]).code %>.png" alt="<%= R18n.locale(session[:locale]).code %>"> <%= R18n.locale(session[:locale]).title %>
+            <img width="20" height="20" src="/flags/<%= R18n.locale(session[:locale]).code %>.png" alt="<%= R18n.locale(session[:locale]).code %>"> <%= R18n.locale(session[:locale]).title %>
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="locale">
             <% for locale in r18n.available_locales %>
             <li role="presentation">
               <a role="menuitem" tabindex="-1" href="/setlocals/<%= locale.code %>">
-                <img src="/flags/<%= locale.code %>.png" alt="<%= locale.title %>"> <%= locale.title %>
+                <img width="20" height="20" src="/flags/<%= locale.code %>.png" alt="<%= locale.title %>"> <%= locale.title %>
               </a>
             </li>
             <% end %>
