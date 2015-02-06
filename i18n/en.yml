@@ -13,8 +13,16 @@ action:
   cancel: Cancel
 game:
   message:
-    won: YAY! This was true!
-    lost: 'Ohhh no, please try a little harder..'
+    won:
+      - YAY! This was true!
+      - awesome
+      - well done
+      - 'You sir, are a genius!'
+    lost:
+      - close but no cigar
+      - sorry that was wrong
+      - common you can do that better
+      - 'ohhh no, try a little harder..'
   measurement: per 100g
   help: 'Just click on the product, where you think the statement from above applies.'
 stats:
@@ -27,12 +35,12 @@ stats:
 nutrition:
   higherText: More
   lowerText: Less
-  Kilokalorien: kilocalorie
+  Kilokalorien: calories
   Eiweiss: protein
   Kohlenhydrate: carbohydrates
   Zucker: sugar
   Fett: fat
-  gesättigteFettsäuren: saturated fatty acids
-  Ballaststoffe: dietary fiber
+  gesättigteFettsäuren: saturated fats
+  Ballaststoffe: dietary fibers
   Natrium: sodium
   Kochsalz: salt

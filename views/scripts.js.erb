@@ -91,9 +91,9 @@ $(document).ready(function () {
     var answer = $.parseJSON(data);
 
     if (answer.correct === true) {
-      showAlert('<%= t.game.message.won %>', 'success');
+      showAlert(wonMessages[Math.floor(Math.random()*wonMessages.length)], 'success');
     } else {
-      showAlert('<%= t.game.message.lost %>', 'danger');
+      showAlert(lostMessages[Math.floor(Math.random()*lostMessages.length)], 'danger');
     }
   }
 
