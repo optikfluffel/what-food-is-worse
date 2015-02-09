@@ -22,8 +22,10 @@ game:
       - 'Och menno, gib dir doch mal etwas mehr Mühe..'
       - Das war leider falsch
       - Vielleicht nächstes Mal
+    final: 'Du hast das Spiel abgeschlossen. Punkte: '
   measurement: auf 100g
-  help: 'Klick einfach auf das Produkt von dem du denkst, dass die Aussage oben stimmt.'
+  help: 'Klick einfach auf das Produkt von dem du denkst, dass die Aussage oben stimmt. Eine richtige Antwort bringt dir +100 Punkte, eine falsche -200.'
+  points: 'Punkte'
 stats:
   won: gewonnen
   lost: verloren

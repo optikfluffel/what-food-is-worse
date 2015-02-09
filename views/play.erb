@@ -1,14 +1,20 @@
 <div id='fiftycent'> <%# because we need a (w)rapper XD %>
 
   <div class='question row text-center'>
-    <h1 class='page-header'><%= game.question %> <small><%= t.game.measurement %></small></h1>
+    <h1 class='page-header'><%= current_question.question_text %> <small><%= t.game.measurement %></small></h1>
+  </div>
+
+  <div class="progress row">
+    <div class="progress-bar" role="progressbar" aria-valuenow="<%= current_progress%>" aria-valuemin="0" aria-valuemax="100" style="width: <%= current_progress%>%;" data-points='<%= game.points %>'>
+      <%= game.points %> <%= t.game.points %>
+    </div>
   </div>
 
   <div class='row' id='messages'></div>
 
   <div class='products row'>
-    <% game.products.each_with_index do |product, index| %>
-      <div class='col-xs-12 col-md-4 col-md-offset-1 text-center game-link' data-game='<%= game.id %>' data-id='<%= product.id %>'>
+    <% current_question.products.each_with_index do |product, index| %>
+      <div class='col-xs-12 col-md-4 col-md-offset-1 text-center game-link' data-game='<%= game.id %>' data-id='<%= product.id %>' data-question='<%= current_question.id %>'>
         <h3><%= product.name %></h3>
         <img src='<%= product.imgurl %>' alt='<%= product.name %>' class='img-responsive' />
       </div>
