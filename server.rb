@@ -145,8 +145,6 @@ get '/play/?' do
     game = last_existing_game
     current_question = unanswered_questions[0]
     current_progress = ((12 - unanswered_questions.length) * 100 / 12).round
-    p "current_progress"
-    p current_progress
   end
 
   if the_user.save!
@@ -215,9 +213,6 @@ get '/stats/?' do
 
   games_lost_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :points.lt => 0).count
   games_won_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :points.gte => 0).count
-
-  p "games_lost_last_week #{games_lost_last_week}"
-  p "games_won_last_week #{games_won_last_week}"
 
   stats = {
     :lost_overall => games_lost_overall,
