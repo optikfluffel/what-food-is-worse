@@ -207,14 +207,14 @@ get '/stats/?' do
 
   the_user = User.first(:username => session[:username])
 
-  games_lost_overall = the_user.games.where(:win => false).count
-  games_won_overall = the_user.games.where(:win => true).count
+  games_lost_overall = the_user.games.where(:points.lt => 0).count
+  games_won_overall = the_user.games.where(:points.gte => 0).count
 
-  games_lost_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :win => false).count
-  games_won_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :win => true).count
+  games_lost_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :points.lt => 0).count
+  games_won_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :points.gte => 0).count
 
-  games_lost_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :win => false).count
-  games_won_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :win => true).count
+  games_lost_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :points.lt => 0).count
+  games_won_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :points.gte => 0).count
 
   p "games_lost_last_week #{games_lost_last_week}"
   p "games_won_last_week #{games_won_last_week}"
@@ -283,4 +283,23 @@ get '/logout/?' do
   else
     halt 401, 'Not authorized.'
   end
+end
+
+
+get '/leaderboard/?' do
+  protected!
+  the_user = User.first(:username => session[:username])
+  the_users_points = the_user.games.reduce(0) { |sum, x| sum + x.points }
+
+  # TODO: this isn't performant, make it so
+  all_users_with_scores = User.all.map! do |user|
+    total_points = user.games.reduce(0) { |sum, x| sum + x.points }
+    { :username => user.username, :total_points => total_points }
+  end
+
+  all_users_with_scores.sort! { |a,b| b[:total_points] <=> a[:total_points] } # supports negative integers instead of using '-' sign for sort
+
+  leaders = all_users_with_scores.last(10)
+
+  erb :leaderboard, :locals => {:leaders => leaders}
 end

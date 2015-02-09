@@ -1,0 +1,21 @@
+<div class='row'>
+  <h1><%= t.leaderboard.title %></h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th><%= t.login.username%></th>
+        <th><%= t.game.points%></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% leaders.each_with_index do |user, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= user[:username] %></td>
+          <td><%= user[:total_points] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
