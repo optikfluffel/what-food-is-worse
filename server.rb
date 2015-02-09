@@ -53,7 +53,7 @@ before do
 end
 
 get '/' do
-	erb :index
+  erb :index
 end
 
 get '/locals/:id.json' do |code|
@@ -90,10 +90,27 @@ get "/json/play/?" do
   protected!
   content_type :json
 
-  game = Game.new.generate_new_game_with_random_products_and_mystery
-
   the_user = User.first(:username => session[:username])
-  the_user.games << game
+
+  # Check if the user has an unfinished game
+  last_existing_game = the_user.games.sort(:created_at.desc).first
+  if last_existing_game.nil?
+    last_existing_game_has_unanswered_questions = false
+  else
+    unanswered_questions = last_existing_game.questions.keep_if { |question| question.answered_correct.nil? }
+    last_existing_game_has_unanswered_questions = unanswered_questions.length > 0
+  end
+
+  unless last_existing_game_has_unanswered_questions
+    game = Game.new.generate_new_game_with_random_questions
+    the_user.games << game
+    current_question = game.questions[0]
+    current_progress = 0
+  else
+    game = last_existing_game
+    current_question = unanswered_questions[0]
+    current_progress = ((12 - unanswered_questions.length) * 100 / 12).round
+  end
 
   if the_user.save!
     #TODO better error handling probably someday maybe
@@ -102,16 +119,35 @@ get "/json/play/?" do
     p "meeeeep"
   end
 
-  game.to_json
+  JSON :current_question => current_question.to_json, :current_progress => current_progress, :current_points => game.points
 end
 
 get '/play/?' do
   protected!
 
-  game = Game.new.generate_new_game_with_random_products_and_mystery
-
   the_user = User.first(:username => session[:username])
-  the_user.games << game
+
+  # Check if the user has an unfinished game
+  last_existing_game = the_user.games.sort(:created_at.desc).first
+  if last_existing_game.nil?
+    last_existing_game_has_unanswered_questions = false
+  else
+    unanswered_questions = last_existing_game.questions.keep_if { |question| question.answered_correct.nil? }
+    last_existing_game_has_unanswered_questions = unanswered_questions.length > 0
+  end
+
+  unless last_existing_game_has_unanswered_questions
+    game = Game.new.generate_new_game_with_random_questions
+    the_user.games << game
+    current_question = game.questions[0]
+    current_progress = 0
+  else
+    game = last_existing_game
+    current_question = unanswered_questions[0]
+    current_progress = ((12 - unanswered_questions.length) * 100 / 12).round
+    p "current_progress"
+    p current_progress
+  end
 
   if the_user.save!
     #TODO better error handling probably someday maybe
@@ -120,7 +156,7 @@ get '/play/?' do
     p "meeeeep"
   end
 
-  erb :play, :locals => {:game => game}
+  erb :play, :locals => {:game => game, :current_question => current_question, :current_progress => current_progress}
 end
 
 post '/play/?' do
@@ -129,14 +165,15 @@ post '/play/?' do
   the_user = User.first(:username => session[:username])
 
   game_id = params['game']
+  question_id = params['question']
   guess_id = params['guess']
 
   game = the_user.games.find(game_id)
+  current_question = game.questions.find(question_id)
 
-  mystery = game.mystery
-
-  product_one = game.products[0]
-  product_two = game.products[1]
+  mystery =     current_question.mystery
+  product_one = current_question.products[0]
+  product_two = current_question.products[1]
 
   candidate_one = product_one.nutritions.select{ |nutrition| nutrition.name == mystery }
   candidate_two = product_two.nutritions.select{ |nutrition| nutrition.name == mystery }
@@ -145,16 +182,23 @@ post '/play/?' do
 
   proposed_solution = Product.find(guess_id).nutritions.select{ |nutrition| nutrition.name == mystery }
 
-  if game.higher
-    correct = maximum == proposed_solution[0].quantity
+  if current_question.higher
+    current_answer_is_correct = maximum == proposed_solution[0].quantity
   else
-    correct = maximum != proposed_solution[0].quantity
+    current_answer_is_correct = maximum != proposed_solution[0].quantity
   end
 
-  game.win = correct
+  if current_answer_is_correct
+    game.points += 100
+  else
+    game.points -= 200
+  end
+
+  current_question.answered_correct = current_answer_is_correct
+
   game.save!
 
-  JSON :correct => correct
+  JSON :correct => current_answer_is_correct
 end
 
 
@@ -163,14 +207,14 @@ get '/stats/?' do
 
   the_user = User.first(:username => session[:username])
 
-  games_lost_overall = the_user.games.where(:win => false).count
-  games_won_overall = the_user.games.where(:win => true).count
+  games_lost_overall = the_user.games.where(:points.lt => 0).count
+  games_won_overall = the_user.games.where(:points.gte => 0).count
 
-  games_lost_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :win => false).count
-  games_won_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :win => true).count
+  games_lost_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :points.lt => 0).count
+  games_won_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :points.gte => 0).count
 
-  games_lost_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :win => false).count
-  games_won_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :win => true).count
+  games_lost_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :points.lt => 0).count
+  games_won_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :points.gte => 0).count
 
   p "games_lost_last_week #{games_lost_last_week}"
   p "games_won_last_week #{games_won_last_week}"
@@ -239,4 +283,23 @@ get '/logout/?' do
   else
     halt 401, 'Not authorized.'
   end
+end
+
+
+get '/leaderboard/?' do
+  protected!
+  the_user = User.first(:username => session[:username])
+  the_users_points = the_user.games.reduce(0) { |sum, x| sum + x.points }
+
+  # TODO: this isn't performant, make it so
+  all_users_with_scores = User.all.map! do |user|
+    total_points = user.games.reduce(0) { |sum, x| sum + x.points }
+    { :username => user.username, :total_points => total_points }
+  end
+
+  all_users_with_scores.sort! { |a,b| b[:total_points] <=> a[:total_points] } # supports negative integers instead of using '-' sign for sort
+
+  leaders = all_users_with_scores.last(10)
+
+  erb :leaderboard, :locals => {:leaders => leaders}
 end

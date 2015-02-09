@@ -5,7 +5,7 @@ login:
   unauthenticated: 'Du musst dich einloggen um spielen zu können, sorry.'
 navigation:
   newgame: Neues Runde spielen
-  stats: Statistiken
+  stats: Persönliche Statistiken
 action:
   login: Login
   logout: Ausloggen
@@ -22,8 +22,10 @@ game:
       - 'Och menno, gib dir doch mal etwas mehr Mühe..'
       - Das war leider falsch
       - Vielleicht nächstes Mal
+    final: 'Du hast das Spiel abgeschlossen. Punkte: '
   measurement: auf 100g
-  help: 'Klick einfach auf das Produkt von dem du denkst, dass die Aussage oben stimmt.'
+  help: 'Klick einfach auf das Produkt von dem du denkst, dass die Aussage oben stimmt. Eine richtige Antwort bringt dir +100 Punkte, eine falsche -200.'
+  points: 'Punkte'
 stats:
   won: gewonnen
   lost: verloren
@@ -31,6 +33,8 @@ stats:
     today: Heute
     lastWeek: Letzte Woche
     overall: Insgesammt
+leaderboard:
+  title: Bestenliste
 nutrition:
   higherText: Mehr
   lowerText: Weniger

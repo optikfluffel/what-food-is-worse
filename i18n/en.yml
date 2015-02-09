@@ -5,7 +5,7 @@ login:
   unauthenticated: 'You will need to log in to play, sorry.'
 navigation:
   newgame: Start a new game
-  stats: Statistics
+  stats: Personal Statistics
 action:
   login: Login
   logout: Logout
@@ -23,8 +23,10 @@ game:
       - sorry that was wrong
       - common you can do that better
       - 'ohhh no, try a little harder..'
+    final: 'You finished this game. Total points: '
   measurement: per 100g
-  help: 'Just click on the product, where you think the statement from above applies.'
+  help: 'Just click on the product, where you think the statement from above applies. A correct answer will give you +100 points, a wrong one -200.'
+  points: 'Points'
 stats:
   won: won
   lost: lost
@@ -32,6 +34,8 @@ stats:
     today: Today
     lastWeek: Last week
     overall: Overall
+leaderboard:
+  title: Leaderboard
 nutrition:
   higherText: More
   lowerText: Less

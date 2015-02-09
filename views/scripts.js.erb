@@ -30,28 +30,39 @@ $(document).ready(function () {
   enableFancyLoginAndRegisterNavbarForm('login');
   enableFancyLoginAndRegisterNavbarForm('register');
 
-  function initializeNewGameRound(newGame) {
-    // deconstruct newGame
-    var newGameId = newGame.id;
-    var newQuestion = newGame.question;
-    var newChoices = newGame.products;
+  function initializeNewGameRound(result) {
+    // deconstruct result
+    var currentQuestion = $.parseJSON(result.current_question)
+    // var newGameId = result.id;
+    var newQuestion = currentQuestion.question_text;
+    var newQuestionId = currentQuestion.id;
+    var newProgress = result.current_progress;
+    var newPoints = result.current_points;
+    var newChoices = currentQuestion.products;
 
     // get elements
     var $wrapper = $('#fiftycent');
     var $question = $('.question.row').children('h1');
     var $products = $('.products.row');
     var $choices = $products.children('.game-link');
+    var $progress = $('.progress-bar');
 
     // update question
-    var $smallQuestionExtension = $('<small />').text('<%= t.game.measurement %>');
+    var $smallQuestionExtension = $('<small />').text(' <%= t.game.measurement %>');
     $question.text(newQuestion).append($smallQuestionExtension);
+
+    // update progessbar
+    $progress.attr('aria-valuenow', newProgress)
+             .data('points', newPoints)
+             .css('width', newProgress+'%')
+             .text(newPoints + ' <%= t.game.points %>');
 
     // update choices
     $choices.each(function(index) {
       var newChoice = $.parseJSON(newChoices[index]);
       var newChoiceId = newChoice.id;
 
-      $(this).data('game', newGameId);
+      $(this).data('question', newQuestionId);
       $(this).data('id', newChoiceId);
 
       $image = $(this).children('img');
@@ -71,7 +82,7 @@ $(document).ready(function () {
     });
   }
 
-  function showAlert(message, type) {
+  function showAlertAndInitializeNewGameRound(message, type) {
     $messages = $('#messages');
 
     $alert = $('<div />').addClass('alert')
@@ -89,12 +100,38 @@ $(document).ready(function () {
 
   function handlePlayAPIAnswer(data) {
     var answer = $.parseJSON(data);
+    if (answer.correct === true) {
+      showAlertAndInitializeNewGameRound(wonMessages[Math.floor(Math.random() * wonMessages.length)], 'success');
+    } else {
+      showAlertAndInitializeNewGameRound(lostMessages[Math.floor(Math.random() * lostMessages.length)], 'danger');
+    }
+  }
+
+  function handleFinalPlayAPIAnswer(data) {
+    var answer = $.parseJSON(data);
+
+    var $wrapper = $('#fiftycent');
+    var currentPoints = $('.progress-bar').data('points');
 
     if (answer.correct === true) {
-      showAlert(wonMessages[Math.floor(Math.random()*wonMessages.length)], 'success');
+      finalPoints = currentPoints + 100;
     } else {
-      showAlert(lostMessages[Math.floor(Math.random()*lostMessages.length)], 'danger');
+      finalPoints = currentPoints - 200;
     }
+
+    var finalColor = '#3c763d';
+
+    if (finalPoints < 0) {
+      finalColor = '#a94442';
+    };
+
+    $finalMessage = $('<h1 />').text('<%= t.game.message.final %>' + finalPoints)
+                               .css('color', finalColor);
+
+    $wrapper.before($finalMessage)
+            .slideUp(SLIDE_TEMPO, function() {
+              $(this).remove();
+            });
   }
 
   function enableEvenFancierGameLinksSoYouCanActuallyPlayNow($link) {
@@ -102,14 +139,22 @@ $(document).ready(function () {
       event.preventDefault();
 
       var gameId = $link.data('game');
-      var id = $link.data('id');
+      var questionId = $link.data('question');
+      var productId = $link.data('id');
+
+      var currentProgress = parseInt($('.progress-bar').attr('aria-valuenow'));
 
       var answer = {
         game: gameId,
-        guess: id
+        question: questionId,
+        guess: productId
       };
 
-      $.post('/play', answer).done(handlePlayAPIAnswer);
+      if (currentProgress > 90) {
+        $.post('/play', answer).done(handleFinalPlayAPIAnswer);
+      } else {
+        $.post('/play', answer).done(handlePlayAPIAnswer);
+      }
     });
   }
 
