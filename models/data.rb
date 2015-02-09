@@ -22,12 +22,12 @@ class Product
   end
 
   def to_json(*a)
-      {
-        :id => _id,
-        :name => name,
-        :imgurl => imgurl,
-        :leshopurl => leshopurl
-      }.to_json(*a)
+    {
+      :id => _id,
+      :name => name,
+      :imgurl => imgurl,
+      :leshopurl => leshopurl
+    }.to_json(*a)
   end
 end
 

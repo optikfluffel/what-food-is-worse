@@ -2,22 +2,22 @@ require 'mongo_mapper'
 include R18n::Helpers
 
 class User
-	include MongoMapper::Document
+  include MongoMapper::Document
 
-	key :username, String, :required => true, :length => 3..50, :unique => true
+  key :username, String, :required => true, :length => 3..50, :unique => true
   key :locals,   String, :default => "en"
-	key :hash,     String, :required => true
-	key :salt,     String, :required => true
+  key :hash,     String, :required => true
+  key :salt,     String, :required => true
 
-	many :games
+  many :games
 
-	timestamps!
+  timestamps!
 end
 
 class Game
-	include MongoMapper::Document
+  include MongoMapper::Document
 
-	attr_accessor :question, :mystery_text
+  attr_accessor :question, :mystery_text
 
   def generate_new_game_with_random_products_and_mystery
     the_game = Game.new
@@ -33,40 +33,41 @@ class Game
 
     random_mystery = array_union[rand(array_union.length)]
 
-		the_game.mystery = random_mystery
+    the_game.mystery = random_mystery
 
     key = random_mystery.sub('davon ', '').sub('Energiewert', 'Kilokalorien').sub(' ', '')
     the_game.mystery_text = t.nutrition[key.to_sym]
 
-		the_game.higher = [true, false][rand(2)]
+    the_game.higher = [true, false][rand(2)]
 
-		if the_game.higher
-			comparisonText = t.nutrition.higherText
-		else
-			comparisonText = t.nutrition.lowerText
-		end
+    if the_game.higher
+      comparisonText = t.nutrition.higherText
+    else
+      comparisonText = t.nutrition.lowerText
+    end
 
-		the_game.question = "#{comparisonText} #{the_game.mystery_text}?"
+    the_game.question = "#{comparisonText} #{the_game.mystery_text}?"
 
     the_game
   end
 
-	key :mystery, String, :required => true # aka nutrition name to guess
-	key :win, Boolean
-	key :higher, Boolean, :required => true
 
-	belongs_to :user
+  key :mystery, String, :required => true # aka nutrition name to guess
+  key :win,     Boolean
+  key :higher,  Boolean, :required => true
 
-	key :product_ids, Array
+  belongs_to :user
+
+  key :product_ids, Array
   many :products, :in => :product_ids
 
-	timestamps!
+  timestamps!
 
   def to_json(*a)
-      {
-        :id => _id,
-        :question => question,
-        :products => products.map { |prod| prod.to_json }
-      }.to_json(*a)
+    {
+      :id => _id,
+      :question => question,
+      :products => products.map { |prod| prod.to_json }
+    }.to_json(*a)
   end
 end

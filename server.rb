@@ -53,7 +53,7 @@ before do
 end
 
 get '/' do
-	erb :index
+  erb :index
 end
 
 get '/locals/:id.json' do |code|
