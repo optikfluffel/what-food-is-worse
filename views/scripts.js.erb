@@ -2,6 +2,10 @@ $(document).ready(function () {
   // foo
   var SLIDE_TEMPO = 500;
 
+  // parse locales
+  var wonMessages = $.parseJSON('<%= t.game.message.won %>');
+  var lostMessages = $.parseJSON('<%= t.game.message.lost %>');
+
   // auto active
   $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
 

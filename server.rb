@@ -59,13 +59,6 @@ get '/' do
   erb :index
 end
 
-get '/locals/:id.json' do |code|
-  content_type :json
-
-  "lostMessages = #{t.game.message.lost}\n" +
-  "wonMessages = #{t.game.message.won}"
-end
-
 get '/setlocals/:id/?' do |code|
   session[:locale] = code
 
@@ -298,7 +291,7 @@ end
 
 
 get '/scripts.js' do
-  content_type 'application/javascript'
+  content_type :js
   erb "scripts.js".to_sym, :layout => false
 end
 
