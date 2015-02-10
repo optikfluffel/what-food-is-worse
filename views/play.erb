@@ -4,7 +4,7 @@
     <h1 class='page-header'><%= current_question.question_text %> <small><%= t.game.measurement %></small></h1>
   </div>
 
-  <div class="progress row">
+  <div class="progress">
     <div class="progress-bar" role="progressbar" aria-valuenow="<%= current_progress%>" aria-valuemin="0" aria-valuemax="100" style="width: <%= current_progress%>%;" data-points='<%= game.points %>'>
       <%= game.points %> <%= t.game.points %>
     </div>
