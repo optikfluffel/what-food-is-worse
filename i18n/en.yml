@@ -15,14 +15,14 @@ game:
   message:
     won:
       - YAY! This was true!
-      - awesome
-      - well done
+      - Awesome!
+      - Well done.
       - 'You sir, are a genius!'
     lost:
-      - close but no cigar
-      - sorry that was wrong
-      - common you can do that better
-      - 'ohhh no, try a little harder..'
+      - Close, but no cigar.
+      - Sorry, that was wrong.
+      - Com'on - you can do better than that.
+      - 'Ohhh no, try a little harder..'
     final: 'You finished this game. Total points: '
   measurement: per 100g
   help: 'Just click on the product, where you think the statement from above applies. A correct answer will give you +100 points, a wrong one -200.'
