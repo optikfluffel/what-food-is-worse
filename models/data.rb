@@ -1,6 +1,7 @@
 require 'mongo_mapper'
 require 'securerandom'
 
+
 class Product
   include MongoMapper::Document
 
@@ -30,6 +31,7 @@ class Product
     }.to_json(*a)
   end
 end
+
 
 class Nutrition
   include MongoMapper::EmbeddedDocument

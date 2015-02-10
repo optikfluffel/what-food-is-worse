@@ -11,6 +11,11 @@ configure :development do
   MongoMapper.database = 'food'
 end
 
+configure :test do
+  use Rack::Session::Pool, :key => 'session', :expire_after => 60
+  MongoMapper.database = 'food-test'
+end
+
 configure :production do
   use Rack::Session::Pool, :key => 'session', :expire_after => 60 * 60 * 24 * 14
 
@@ -19,11 +24,6 @@ configure :production do
   MongoMapper.database.authenticate(ENV["OPENSHIFT_MONGODB_DB_USERNAME"], ENV["OPENSHIFT_MONGODB_DB_PASSWORD"])
 
   set :static_cache_control, [:public, :max_age => 60 * 60 * 24 * 14]
-end
-
-configure :test do
-  use Rack::Session::Pool, :key => 'session', :expire_after => 60
-  MongoMapper.database = 'food-test'
 end
 
 configure do
@@ -83,10 +83,42 @@ get '/setlocals/:id/?' do |code|
   redirect back
 end
 
-get '/scripts.js' do
-  content_type 'application/javascript'
-  erb "scripts.js".to_sym, :layout => false
+
+get '/play/?' do
+  protected!
+
+  the_user = User.first(:username => session[:username])
+
+  # Check if the user has an unfinished game
+  last_existing_game = the_user.games.sort(:created_at.desc).first
+  if last_existing_game.nil?
+    last_existing_game_has_unanswered_questions = false
+  else
+    unanswered_questions = last_existing_game.questions.keep_if { |question| question.answered_correct.nil? }
+    last_existing_game_has_unanswered_questions = unanswered_questions.length > 0
+  end
+
+  unless last_existing_game_has_unanswered_questions
+    game = Game.new.generate_new_game_with_random_questions
+    the_user.games << game
+    current_question = game.questions[0]
+    current_progress = 0
+  else
+    game = last_existing_game
+    current_question = unanswered_questions[0]
+    current_progress = ((12 - unanswered_questions.length) * 100 / 12).round
+  end
+
+  if the_user.save!
+    #TODO better error handling probably someday maybe
+    p "okok en game würde gespeichert"
+  else
+    p "meeeeep"
+  end
+
+  erb :play, :locals => {:game => game, :current_question => current_question, :current_progress => current_progress}
 end
+
 
 get "/json/play/?" do
   protected!
@@ -124,40 +156,6 @@ get "/json/play/?" do
   JSON :current_question => current_question.to_json, :current_progress => current_progress, :current_points => game.points
 end
 
-get '/play/?' do
-  protected!
-
-  the_user = User.first(:username => session[:username])
-
-  # Check if the user has an unfinished game
-  last_existing_game = the_user.games.sort(:created_at.desc).first
-  if last_existing_game.nil?
-    last_existing_game_has_unanswered_questions = false
-  else
-    unanswered_questions = last_existing_game.questions.keep_if { |question| question.answered_correct.nil? }
-    last_existing_game_has_unanswered_questions = unanswered_questions.length > 0
-  end
-
-  unless last_existing_game_has_unanswered_questions
-    game = Game.new.generate_new_game_with_random_questions
-    the_user.games << game
-    current_question = game.questions[0]
-    current_progress = 0
-  else
-    game = last_existing_game
-    current_question = unanswered_questions[0]
-    current_progress = ((12 - unanswered_questions.length) * 100 / 12).round
-  end
-
-  if the_user.save!
-    #TODO better error handling probably someday maybe
-    p "okok en game würde gespeichert"
-  else
-    p "meeeeep"
-  end
-
-  erb :play, :locals => {:game => game, :current_question => current_question, :current_progress => current_progress}
-end
 
 post '/play/?' do
   protected!
@@ -202,33 +200,6 @@ post '/play/?' do
 end
 
 
-get '/stats/?' do
-  protected!
-
-  the_user = User.first(:username => session[:username])
-
-  games_lost_overall = the_user.games.where(:points.lt => 0).count
-  games_won_overall = the_user.games.where(:points.gte => 0).count
-
-  games_lost_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :points.lt => 0).count
-  games_won_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :points.gte => 0).count
-
-  games_lost_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :points.lt => 0).count
-  games_won_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :points.gte => 0).count
-
-  stats = {
-    :lost_overall => games_lost_overall,
-    :won_overall => games_won_overall,
-    :lost_last_week => games_lost_last_week,
-    :won_last_week => games_won_last_week,
-    :lost_today => games_lost_today,
-    :won_today => games_won_today
-  }
-
-  erb :stats, :locals => {:stats => stats}
-end
-
-
 post '/register/?' do
   salt = BCrypt::Engine.generate_salt
   hash = BCrypt::Engine.hash_secret(params[:password], salt)
@@ -266,10 +237,6 @@ post '/login/?' do
   redirect '/'
 end
 
-get '/supersecret/?' do # jk ;D - you all can know if you want to
-  "Users: #{User.all.count}\nGames lost: #{Game.where(:win => false).count}\nGames won: #{Game.where(:win => true).count}"
-end
-
 
 get '/logout/?' do
   if authenticated?
@@ -280,6 +247,33 @@ get '/logout/?' do
   else
     halt 401, 'Not authorized.'
   end
+end
+
+
+get '/stats/?' do
+  protected!
+
+  the_user = User.first(:username => session[:username])
+
+  games_lost_overall = the_user.games.where(:points.lt => 0).count
+  games_won_overall = the_user.games.where(:points.gte => 0).count
+
+  games_lost_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :points.lt => 0).count
+  games_won_last_week = the_user.games.where(:created_at.gte => Time.now.midnight - 7.days, :points.gte => 0).count
+
+  games_lost_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :points.lt => 0).count
+  games_won_today = the_user.games.where(:created_at.gte => Time.now.midnight - 1.days, :points.gte => 0).count
+
+  stats = {
+    :lost_overall => games_lost_overall,
+    :won_overall => games_won_overall,
+    :lost_last_week => games_lost_last_week,
+    :won_last_week => games_won_last_week,
+    :lost_today => games_lost_today,
+    :won_today => games_won_today
+  }
+
+  erb :stats, :locals => {:stats => stats}
 end
 
 
@@ -299,4 +293,15 @@ get '/leaderboard/?' do
   leaders = all_users_with_scores.last(10)
 
   erb :leaderboard, :locals => {:leaders => leaders}
+end
+
+
+get '/scripts.js' do
+  content_type 'application/javascript'
+  erb "scripts.js".to_sym, :layout => false
+end
+
+
+get '/supersecret/?' do # jk ;D - you all can know if you want to
+  "Users: #{User.all.count}\nGames lost: #{Game.where(:win => false).count}\nGames won: #{Game.where(:win => true).count}"
 end

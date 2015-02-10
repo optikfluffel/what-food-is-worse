@@ -1,6 +1,7 @@
 require 'mongo_mapper'
 include R18n::Helpers
 
+
 class User
   include MongoMapper::Document
 
@@ -13,6 +14,33 @@ class User
 
   timestamps!
 end
+
+
+class Game
+  include MongoMapper::Document
+
+  attr_accessor :points
+
+  key        :points, Integer, :numeric => true, :default => 0
+  many       :questions # Array of 12 questions as MongoMapper::EmbeddedDocument
+  belongs_to :user
+  timestamps!
+
+
+  def generate_new_game_with_random_questions
+    random_question = Array.new(12).map { |x| Question.new.generate_new_question_with_random_products_and_mystery }
+    Game.new(:questions => random_question)
+  end
+
+  def to_json(*a)
+    {
+      :id => _id,
+      :points => points,
+      :questions => questions.map { |question| question.to_json }
+    }.to_json(*a)
+  end
+end
+
 
 class Question
   include MongoMapper::EmbeddedDocument
@@ -67,31 +95,6 @@ class Question
       :question_text => question_text,
       :products => products.map { |prod| prod.to_json },
       :answered_correct => answered_correct
-    }.to_json(*a)
-  end
-end
-
-class Game
-  include MongoMapper::Document
-
-  attr_accessor :points
-
-  key        :points, Integer, :numeric => true, :default => 0
-  many       :questions # Array of 12 questions as MongoMapper::EmbeddedDocument
-  belongs_to :user
-  timestamps!
-
-
-  def generate_new_game_with_random_questions
-    random_question = Array.new(12).map { |x| Question.new.generate_new_question_with_random_products_and_mystery }
-    Game.new(:questions => random_question)
-  end
-
-  def to_json(*a)
-    {
-      :id => _id,
-      :points => points,
-      :questions => questions.map { |question| question.to_json }
     }.to_json(*a)
   end
 end
