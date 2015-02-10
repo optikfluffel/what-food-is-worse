@@ -21,7 +21,7 @@ game:
     lost:
       - Close, but no cigar.
       - Sorry, that was wrong.
-      - Com'on - you can do better than that.
+      - Come on - you can do better than that.
       - 'Ohhh no, try a little harder..'
     final: 'You finished this game. Total points: '
   measurement: per 100g
