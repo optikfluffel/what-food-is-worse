@@ -3,6 +3,7 @@ require 'sinatra'
 require 'json'
 require 'bcrypt'
 require 'sinatra/r18n'
+require 'sinatra/content_for'
 require_relative 'models/user.rb'
 require_relative 'models/data.rb'
 

@@ -8,6 +8,7 @@ gem 'mongo_mapper'
 gem 'bson_ext'
 gem 'bcrypt'
 gem 'sinatra-r18n'
+gem 'sinatra-contrib'
 
 group :test do
   gem 'rack-test'
