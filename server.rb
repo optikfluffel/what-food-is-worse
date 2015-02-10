@@ -59,7 +59,7 @@ get '/' do
 end
 
 get '/locals/:id.json' do |code|
-  content_type :json
+  content_type :js
 
   "lostMessages = #{t.game.message.lost}\n" +
   "wonMessages = #{t.game.message.won}"
