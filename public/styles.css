@@ -68,6 +68,10 @@ body {
   margin-top: -2px;
 }
 
+.stats.row {
+  margin-top: 2.5em;
+}
+
 footer {
   position: absolute;
   bottom: 0;
