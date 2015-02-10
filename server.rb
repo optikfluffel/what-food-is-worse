@@ -49,7 +49,7 @@ helpers do
 end
 
 before do
-  session[:locale] ||= "en"
+  session[:locale] ||= 'de'
   the_user = User.first(:username => session[:username])
   session[:locale] = the_user.locals unless the_user.nil?
 end
