@@ -3,6 +3,7 @@ login:
   password: Passwort
   authenticated: Howdy %1! Lust auf <a href='/play' title='Neue Runde starten'>ein Spiel?</a>
   unauthenticated: 'Du musst dich einloggen um spielen zu können, sorry.'
+  failed: Woops dein Usernamen oder dein Passwort war falsch
 navigation:
   newgame: Neues Runde spielen
   stats: Persönliche Statistiken

@@ -3,6 +3,7 @@ login:
   password: Password
   authenticated: Howdy %1! Do you wanna play a <a href='/play' title='start a new game'>game</a>?
   unauthenticated: 'You will need to log in to play, sorry.'
+  failed: Woops your username or your password was wrong
 navigation:
   newgame: Start a new game
   stats: Personal Statistics

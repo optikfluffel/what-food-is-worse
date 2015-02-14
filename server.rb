@@ -55,8 +55,16 @@ before do
   session[:locale] = the_user.locals unless the_user.nil?
 end
 
+error 401 do
+  redirect '/401'
+end
+
 get '/' do
   erb :index
+end
+
+get '/401/?' do
+  erb :"401"
 end
 
 get '/setlocals/:id/?' do |code|
@@ -221,11 +229,10 @@ post '/login/?' do
       session[:username] = params[:username]
       session[:locale] = user.locals
     else
-      # TODO: show flash error
-      redirect '/'
+      halt 401 # Not authorized
     end
   else
-    halt 401, 'Not authorized.'
+    halt 401 # Not authorized
   end
 
   redirect '/'
@@ -239,7 +246,7 @@ get '/logout/?' do
     # TODO: show flash message
     redirect '/'
   else
-    halt 401, 'Not authorized.'
+    halt 401 # Not authorized
   end
 end
 
