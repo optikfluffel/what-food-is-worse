@@ -284,7 +284,7 @@ get '/leaderboard/?' do
 
   all_users_with_scores.sort! { |a,b| b[:total_points] <=> a[:total_points] } # supports negative integers instead of using '-' sign for sort
 
-  leaders = all_users_with_scores.last(10)
+  leaders = all_users_with_scores.first(10)
 
   erb :leaderboard, :locals => {:leaders => leaders}
 end
