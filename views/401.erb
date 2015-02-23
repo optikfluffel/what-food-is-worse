@@ -1,0 +1,44 @@
+<h1 class='page-header title'>
+  <%= t.login.failed %>
+</h1>
+
+<div class="text-center">
+  <form class='register form-inline' action='register' method='post'>
+    <div class='form-group'>
+      <input id="username" type='text' class='form-control' name='username' placeholder='<%= t.login.username %>'>
+    </div>
+    <div class='form-group'>
+      <input id='password' type='password' class='form-control' name='password' placeholder='<%= t.login.password %>'>
+    </div>
+    <button type='submit' class='btn btn-primary'>
+      <span class="glyphicon glyphicon-ok-circle"></span> <%= t.action.register %>
+    </button>
+  </form>
+</div>
+
+<div class="github-fork-ribbon-wrapper left-bottom hidden-xs">
+  <div class="github-fork-ribbon">
+    <a href="https://github.com/optikfluffel/what-food-is-worse">Fork me on GitHub</a>
+  </div>
+</div>
+
+
+<% content_for :custom_styles do %>
+  <link rel='stylesheet' type='text/css' href='//cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.css'>
+  <style media="screen">
+    html {
+      background: url(/bg.jpg) no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+    body {
+      background: 0;
+    }
+    h1.title {
+      color: #fff;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+    }
+  </style>
+<% end %>
